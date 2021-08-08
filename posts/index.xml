@@ -3,7 +3,14 @@
         <title>All Posts - Incidental Info Sec</title>
         <link>https://incidentalinfosec.com/posts/</link>
         <description>All Posts | Incidental Info Sec</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 17:34:09 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Post2</title>
+    <link>https://incidentalinfosec.com/posts/post2/</link>
+    <pubDate>Sun, 08 Aug 2021 17:34:09 -0400</pubDate><author>
+        <name>Author</name>
+    </author><guid>https://incidentalinfosec.com/posts/post2/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>Firstpost</title>
     <link>https://incidentalinfosec.com/posts/firstpost/</link>
     <pubDate>Sun, 08 Aug 2021 16:06:36 -0400</pubDate><author>
