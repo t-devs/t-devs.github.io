@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>All Posts - Incidental Info Sec</title>
+        <link>https://incidentalinfosec.com/posts/</link>
+        <description>All Posts | Incidental Info Sec</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Firstpost</title>
+    <link>https://incidentalinfosec.com/posts/firstpost/</link>
+    <pubDate>Sun, 08 Aug 2021 16:06:36 -0400</pubDate><author>
+        <name>Author</name>
+    </author><guid>https://incidentalinfosec.com/posts/firstpost/</guid>
+    <description><![CDATA[This is my test post.]]></description>
+</item></channel>
+</rss>
