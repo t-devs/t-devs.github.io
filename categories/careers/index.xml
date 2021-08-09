@@ -1,9 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>All Posts - Incidental InfoSec</title>
-        <link>https://incidentalinfosec.com/posts/</link>
-        <description>All Posts | Incidental InfoSec</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/posts/" rel="self" type="application/rss+xml" /><item>
+        <title>Careers - Category - Incidental InfoSec</title>
+        <link>https://incidentalinfosec.com/categories/careers/</link>
+        <description>Careers - Category - Incidental InfoSec</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/careers/" rel="self" type="application/rss+xml" /><item>
     <title>A walk through the cyber meat grinder</title>
     <link>https://incidentalinfosec.com/posts/cyber-meat-grinder/</link>
     <pubDate>Sun, 08 Aug 2021 16:06:36 -0400</pubDate><author>

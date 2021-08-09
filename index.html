@@ -45,7 +45,7 @@
             <a href="/" title="Incidental InfoSec">Incidental InfoSec</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/posts/"> Posts </a><span class="menu-item delimiter"></span><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                     <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
                         <option value="light">Light</option>
@@ -66,7 +66,7 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/posts/" title="">Posts</a><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
                 <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
                     <option value="light">Light</option>
@@ -84,20 +84,29 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><div class="page home" posts><div class="home-profile"><div class="home-avatar"><a href="/about" title="About"><img
+            <div class="container"><div class="page home" posts><div class="home-profile"><div class="home-avatar"><a href="/about/" title="About"><img
         class="lazyload"
-        data-src="download.jpg"
-        data-srcset="download.jpg, download.jpg 1.5x, download.jpg 2x"
+        data-src="/images/avatar.svg"
+        data-srcset="/images/avatar.svg, /images/avatar.svg 1.5x, /images/avatar.svg 2x"
         data-sizes="auto"
-        alt="download.jpg"
-        title="download.jpg" height="6rem" width="6rem"
-    /></a></div><h2 class="home-subtitle">I don&#39;t know what I&#39;m doing</h2></div>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/firstpost/">Firstpost</a>
+        alt="/images/avatar.svg"
+        title="/images/avatar.svg" height="6rem" width="6rem"
+    /></a></div><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2></div>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/posts/cyber-meat-grinder/" aria-label=A&#32;walk&#32;through&#32;the&#32;cyber&#32;meat&#32;grinder><img
+        class="lazyload"
+        data-src="/posts/cyber-meat-grinder/military.png"
+        data-srcset="/posts/cyber-meat-grinder/military.png, /posts/cyber-meat-grinder/military.png 1.5x, /posts/cyber-meat-grinder/military.png 2x"
+        data-sizes="auto"
+        alt="/posts/cyber-meat-grinder/military.png"
+        title="/posts/cyber-meat-grinder/military.png" height="640" width="1280"
+    /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/cyber-meat-grinder/">A walk through the cyber meat grinder</a>
     </h1><div class="post-meta">
         <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
-        </span>&nbsp;<span class="post-publish">published on <time datetime="2021-08-08">2021-08-08</time></span></div><div class="content">First Heading Second Heading This is my test post.</div><div class="post-footer">
-        <a href="/posts/firstpost/">Read more...</a></div>
+        </span>&nbsp;<span class="post-publish">published on <time datetime="2021-08-08">2021-08-08</time></span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/careers/"><i class="far fa-folder fa-fw"></i>Careers</a></span></div><div class="content">Coming Soon </div><div class="post-footer">
+        <a href="/posts/cyber-meat-grinder/">Read more...</a></div>
 </article></div></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span></div>
@@ -110,7 +119,7 @@
         </a>
     </div><div class="assets"><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script></div>
 
-<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10}};</script></div>
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"data":{"id-1":"I don't know how I got here."},"typeit":{"cursorChar":null,"cursorSpeed":null,"data":{"id-1":["id-1"]},"duration":null,"speed":null}};</script></div>
 </body>
 
 </html>
