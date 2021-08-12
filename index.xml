@@ -1,18 +1,18 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Incidental InfoSec</title>
+        <title>Incidental InfoSec Blog</title>
         <link>https://incidentalinfosec.com/</link>
-        <description>Incidental InfoSec</description>
+        <description>Incidental InfoSec Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate>
             <atom:link href="https://incidentalinfosec.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>SOC work. A walk through the trenches.  </title>
-    <link>https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches/</link>
+    <title>SOC work. A walk through the trenches. [Part 1]</title>
+    <link>https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/</link>
     <pubDate>Sun, 08 Aug 2021 16:06:36 -0400</pubDate><author>
         <name>devs</name>
-    </author><guid>https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches/</guid>
+    </author><guid>https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/military.png" referrerpolicy="no-referrer">
-            </div>Coming Soon ]]></description>
+            </div>It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?]]></description>
 </item></channel>
 </rss>

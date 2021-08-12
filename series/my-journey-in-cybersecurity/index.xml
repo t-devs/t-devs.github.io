@@ -1,9 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Careers - Category - Incidental InfoSec Blog</title>
-        <link>https://incidentalinfosec.com/categories/careers/</link>
-        <description>Careers - Category - Incidental InfoSec Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/careers/" rel="self" type="application/rss+xml" /><item>
+        <title>My journey in cybersecurity - Series - Incidental InfoSec Blog</title>
+        <link>https://incidentalinfosec.com/series/my-journey-in-cybersecurity/</link>
+        <description>My journey in cybersecurity - Series - Incidental InfoSec Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 08 Aug 2021 16:06:36 -0400</lastBuildDate><atom:link href="https://incidentalinfosec.com/series/my-journey-in-cybersecurity/" rel="self" type="application/rss+xml" /><item>
     <title>SOC work. A walk through the trenches. [Part 1]</title>
     <link>https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/</link>
     <pubDate>Sun, 08 Aug 2021 16:06:36 -0400</pubDate><author>

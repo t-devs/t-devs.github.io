@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">SOC work. A walk through the trenches. [Part 1] - Incidental InfoSec Blog</title><meta name="Description" content=""><meta property="og:title" content="SOC work. A walk through the trenches. [Part 1]" />
+<meta property="og:description" content="It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-08T16:06:36-04:00" />
+<meta property="article:modified_time" content="2021-08-08T16:06:36-04:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SOC work. A walk through the trenches. [Part 1]"/>
+<meta name="twitter:description" content="It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?"/>
+<meta name="application-name" content="Incidental InfoSec Blog">
+<meta name="apple-mobile-web-app-title" content="Incidental InfoSec Blog">
+
+<meta name="theme-color" content="#ffffff"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "SOC work. A walk through the trenches. [Part 1]",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/incidentalinfosec.com\/posts\/soc-work-a-walk-through-the-trenches-part-1\/"
+        },"genre": "posts","wordcount":  1009 ,
+        "url": "https:\/\/incidentalinfosec.com\/posts\/soc-work-a-walk-through-the-trenches-part-1\/","datePublished": "2021-08-08T16:06:36-04:00","dateModified": "2021-08-08T16:06:36-04:00","publisher": {
+            "@type": "Organization",
+            "name": "devs"},"author": {
+                "@type": "Person",
+                "name": "devs"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="" header-mobile=""><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let themeColorMeta = getMeta('theme-color');
+        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Incidental InfoSec Blog">Incidental InfoSec Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/series/"> Series </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Incidental InfoSec Blog">Incidental InfoSec Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/series/" title="">Series</a><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">SOC work. A walk through the trenches. [Part 1]</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/careers/"><i class="far fa-folder fa-fw"></i>Careers</a></span>&nbsp;<span class="post-category">and</span>&nbsp;<span class="post-series">series <a href="/series/my-journey-in-cybersecurity/"><i class="far fa-list-alt fa-fw"></i>My journey in cybersecurity</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1009 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        data-src="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png"
+        data-srcset="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png, /posts/soc-work-a-walk-through-the-trenches-part-1/military.png 1.5x, /posts/soc-work-a-walk-through-the-trenches-part-1/military.png 2x"
+        data-sizes="auto"
+        alt="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png"
+        title="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png" height="405" width="1206"
+    /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#in-the-beginning">In the beginning</a></li>
+    <li><a href="#rough-waters">Rough Waters</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?&rdquo;. I know I did&hellip;</p>
+<p>Over the last several years, I&rsquo;ve managed to convince my peers enough that I appear to know what I&rsquo;m doing and has granted me the opportunity to hold a handful of positions either operating in or working closely with SOC teams. I hope through these blog posts I can shed some light on the lessons that I&rsquo;ve learned working on the front lines. If nothing else, if I can encourage any beat-up, stressed-out, and just plain tired folks in cyber to keep up the good fight, then this series will have been a success.</p>
+<h2 id="in-the-beginning">In the beginning</h2>
+<p>Starting in 2015, I began my voyage trying to break into the InfoSec field as naive college student eager to find my first gig. I had somehow managed to snag an internship earlier in the year working at a cybersecurity start-up that specialized in consulting. You know&hellip;what could be better than having the new intern pound on keyboards inside million dollar customer networks?</p>
+<figure><img src="no_idea_dog.jpg" width="400"/>
+</figure>
+
+<p>Okay, okay&hellip;it wasn&rsquo;t that glamorous. Honestly, the typical day for me could be summarized as:</p>
+<ul>
+<li>Googling. Lots and lots of Googling. (this hasn&rsquo;t changed)</li>
+<li>Reading and learning a ton about security vendors, products, you name it from blogs.</li>
+<li>Spending 30 minutes trying to wrangle an unwieldy corporate VMware environment.</li>
+</ul>
+<p>I guess I did something right because shortly after I managed to get hired on as an entry-level SOC analyst within the same company. I was feeling pumped! All my hard work and hundreds of hours spent learning security finally felt worth it. I saved no time diving head first into the role and learning all that I could about Splunk and incident response. I was like a kid in a candy store with all the new tools and technologies I was being exposed to. There was just one problem&hellip;Our small start-up SOC had become inundated with security events.</p>
+<figure><img src="fp_overload.gif" width="300"/>
+</figure>
+
+<h2 id="rough-waters">Rough Waters</h2>
+<p>If there&rsquo;s one thing that can kill a SOC team&rsquo;s motivation and drive to learn, it&rsquo;s event overload and triaging the same noisy alerts day in, day out. Sounds like the definition of insanity, doesn&rsquo;t it? This quickly becomes a slippery slope with the unfortunate part being that it&rsquo;s not a unique problem affecting a few organizations here and there&hellip;it impacts a large majority of companies.</p>
+<p>So what happens if false positive alert fatigue is not solved early? In my experience, nothing good.</p>
+<ul>
+<li>Career growth and progression is stunted.</li>
+<li>Additional stress is added onto an already stressful position (more on this in the next post).</li>
+<li>An increased probability that actual security incidents won&rsquo;t be properly detected.</li>
+</ul>
+<p>Alert management itself effectively becomes a game within the game for SOC teams. But there has to be a way of solving this right? Right? Well, this can be a tough cookie to crack. In my opinion, a number of things need to happen to move things in the right direction.</p>
+<ol>
+<li>
+<p><strong>Have a desire to be lazy</strong> - The adage of &ldquo;if you have to do something more than once, script it out&rdquo; couldn&rsquo;t be more true in information security and IT in general. It&rsquo;s obviously easier said than done for some cases, however, putting the time in up front goes a long way. Something as small as automating IOC enrichment look-ups with third party tools (VirusTotal, Shodan, etc.) or creating small AWS Lambda functions that react to certain events end up saving a ton of time!</p>
+</li>
+<li>
+<p><strong>Actionable, risk-based alerting</strong> - Only trigger alerts for the SOC that require further action. Many compliance frameworks (cough PCI cough) still to this day require enabling alerts for tasks and behaviors that, for some organizations, happen hundreds of times per day. Elevated Windows security group modifications anyone? This is where risk-based alerting can help. In its most basic sense, risk-based alerting could be as simple as only triggering specific alerts for domain admins or high-risk users that are continuously failing simulated phishing tests. In a more complex configuration, risk-based alerting can involve noisy alerts still being configured, however, instead of notifying the SOC, a &ldquo;risk&rdquo; score counter is automatically updated for the asset or identity involved. Defenders are then able to monitor for users and systems with increasing risk scores in the environment over time.</p>
+</li>
+<li>
+<p><strong>Prioritize learning and development over alert SLAs</strong> - This one personally hits home with what I experienced and observed early on in my career. In far too many scenarios (especially in MSSP organizations) I&rsquo;ve observed that alert counts and SLAs become the main focus of the business instead of facilitating learning and development. Why is this? Simple, you can easily quantify alerts and time. It&rsquo;s important for defenders (especially newcomers in the field) to learn the ins and outs of various operating systems. They need to learn the various obfuscation techniques that attackers use to bypass security controls. They need to learn to script and code so that challenging problems can be solved faster. This won&rsquo;t happen when alert ticket queue SLAs control job performance.</p>
+</li>
+</ol>
+<p>As I look back at my first and second years working in the industry on a small SOC team, I am truly grateful for the experience that it offered me. I learned what it meant to work on a team and to utilize the strengths of others to tackle tough challenges. It was one hell of a ride during the early days for sure.</p>
+<p>Stay tuned for Part 2 of this blog series where I&rsquo;ll be diving into the next few years of my cyber adventure and how I began my battle with the beast that is known as job burnout.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-08-08</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="#" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+</article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-168058506-2');
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-168058506-2" async></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false}};</script></div>
+</body>
+
+</html>
