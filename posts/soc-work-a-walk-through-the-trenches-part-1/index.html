@@ -32,7 +32,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/incidentalinfosec.com\/posts\/soc-work-a-walk-through-the-trenches-part-1\/"
-        },"genre": "posts","wordcount":  1009 ,
+        },"genre": "posts","wordcount":  1016 ,
         "url": "https:\/\/incidentalinfosec.com\/posts\/soc-work-a-walk-through-the-trenches-part-1\/","datePublished": "2021-08-08T16:06:36-04:00","dateModified": "2021-08-08T16:06:36-04:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
@@ -130,15 +130,15 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/careers/"><i class="far fa-folder fa-fw"></i>Careers</a></span>&nbsp;<span class="post-category">and</span>&nbsp;<span class="post-series">series <a href="/series/my-journey-in-cybersecurity/"><i class="far fa-list-alt fa-fw"></i>My journey in cybersecurity</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1009 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1016 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
-        data-src="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png"
-        data-srcset="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png, /posts/soc-work-a-walk-through-the-trenches-part-1/military.png 1.5x, /posts/soc-work-a-walk-through-the-trenches-part-1/military.png 2x"
+        data-src="/posts/soc-work-a-walk-through-the-trenches-part-1/military.webp"
+        data-srcset="/posts/soc-work-a-walk-through-the-trenches-part-1/military.webp, /posts/soc-work-a-walk-through-the-trenches-part-1/military.webp 1.5x, /posts/soc-work-a-walk-through-the-trenches-part-1/military.webp 2x"
         data-sizes="auto"
-        alt="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png"
-        title="/posts/soc-work-a-walk-through-the-trenches-part-1/military.png" height="405" width="1206"
+        alt="/posts/soc-work-a-walk-through-the-trenches-part-1/military.webp"
+        title="/posts/soc-work-a-walk-through-the-trenches-part-1/military.webp" height="405" width="1206"
     /></div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -151,20 +151,20 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?&rdquo;. I know I did&hellip;</p>
-<p>Over the last several years, I&rsquo;ve managed to convince my peers enough that I appear to know what I&rsquo;m doing and has granted me the opportunity to hold a handful of positions either operating in or working closely with SOC teams. I hope through these blog posts I can shed some light on the lessons that I&rsquo;ve learned working on the front lines. If nothing else, if I can encourage any beat-up, stressed-out, and just plain tired folks in cyber to keep up the good fight, then this series will have been a success.</p>
+<p>Over the last several years, I&rsquo;ve somehow managed to convince my peers enough that I know what I&rsquo;m doing. This has granted me the opportunity to hold a handful of positions either operating in or working closely with SOC teams. I hope through these blog posts I can shed some light on the lessons that I&rsquo;ve learned working on the front lines. If nothing else, if I can encourage any beat-up, stressed-out, and just plain tired folks in the industry to keep up the good fight, then this series will have been a success.</p>
 <h2 id="in-the-beginning">In the beginning</h2>
-<p>Starting in 2015, I began my voyage trying to break into the InfoSec field as naive college student eager to find my first gig. I had somehow managed to snag an internship earlier in the year working at a cybersecurity start-up that specialized in consulting. You know&hellip;what could be better than having the new intern pound on keyboards inside million dollar customer networks?</p>
-<figure><img src="no_idea_dog.jpg" width="400"/>
+<p>Starting in 2015, I began my voyage trying to break into the InfoSec field as naive college student eager to find my first gig. I had somehow managed to snag an internship earlier in the year working at a cybersecurity start-up that specialized in consulting. You know&hellip;what could be better than having the new intern bang on keyboards inside million dollar customer networks?</p>
+<figure><img src="/images/no_idea_dog.webp" width="400"/>
 </figure>
 
 <p>Okay, okay&hellip;it wasn&rsquo;t that glamorous. Honestly, the typical day for me could be summarized as:</p>
 <ul>
-<li>Googling. Lots and lots of Googling. (this hasn&rsquo;t changed)</li>
+<li>Googling. Lots and lots of Googling. (This hasn&rsquo;t changed)</li>
 <li>Reading and learning a ton about security vendors, products, you name it from blogs.</li>
 <li>Spending 30 minutes trying to wrangle an unwieldy corporate VMware environment.</li>
 </ul>
-<p>I guess I did something right because shortly after I managed to get hired on as an entry-level SOC analyst within the same company. I was feeling pumped! All my hard work and hundreds of hours spent learning security finally felt worth it. I saved no time diving head first into the role and learning all that I could about Splunk and incident response. I was like a kid in a candy store with all the new tools and technologies I was being exposed to. There was just one problem&hellip;Our small start-up SOC had become inundated with security events.</p>
-<figure><img src="fp_overload.gif" width="300"/>
+<p>I guess I did something right because shortly after I managed to get hired on as an entry-level SOC analyst within the same company. I was feeling pumped! All my hard work and hundreds of hours spent learning security finally felt worth it. I saved no time diving head first into the role and learning all that I could about Splunk and incident response. I was like a kid in a candy store with all the new tools and technologies I was being exposed to. There was just one problem&hellip; Our small start-up SOC had become inundated with a ton of security alerts to review.</p>
+<figure><img src="/images/fp_overload.webp" width="300"/>
 </figure>
 
 <h2 id="rough-waters">Rough Waters</h2>
@@ -178,17 +178,17 @@
 <p>Alert management itself effectively becomes a game within the game for SOC teams. But there has to be a way of solving this right? Right? Well, this can be a tough cookie to crack. In my opinion, a number of things need to happen to move things in the right direction.</p>
 <ol>
 <li>
-<p><strong>Have a desire to be lazy</strong> - The adage of &ldquo;if you have to do something more than once, script it out&rdquo; couldn&rsquo;t be more true in information security and IT in general. It&rsquo;s obviously easier said than done for some cases, however, putting the time in up front goes a long way. Something as small as automating IOC enrichment look-ups with third party tools (VirusTotal, Shodan, etc.) or creating small AWS Lambda functions that react to certain events end up saving a ton of time!</p>
+<p><strong>Have a desire to be lazy</strong> - The adage of &ldquo;if you have to do something more than once, script it out&rdquo; couldn&rsquo;t be more true in information security and IT in general. It&rsquo;s obviously easier said than done for some cases, however, putting the time in up front goes a long way. Something as small as <a href="https://github.com/yeti-platform/yeti" target="_blank" rel="noopener noreffer">automating IOC enrichment look-ups</a> with third party tools (VirusTotal, Shodan, etc.) or creating <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-security-incident-response-guide/infrastructure-domain-incidents.html" target="_blank" rel="noopener noreffer">AWS Lambda functions</a> that react to certain events end up saving a ton of time!</p>
 </li>
 <li>
-<p><strong>Actionable, risk-based alerting</strong> - Only trigger alerts for the SOC that require further action. Many compliance frameworks (cough PCI cough) still to this day require enabling alerts for tasks and behaviors that, for some organizations, happen hundreds of times per day. Elevated Windows security group modifications anyone? This is where risk-based alerting can help. In its most basic sense, risk-based alerting could be as simple as only triggering specific alerts for domain admins or high-risk users that are continuously failing simulated phishing tests. In a more complex configuration, risk-based alerting can involve noisy alerts still being configured, however, instead of notifying the SOC, a &ldquo;risk&rdquo; score counter is automatically updated for the asset or identity involved. Defenders are then able to monitor for users and systems with increasing risk scores in the environment over time.</p>
+<p><strong>Actionable, risk-based alerting</strong> - Only trigger alerts for the SOC that require further action. Many compliance frameworks (cough PCI cough) still to this day require enabling alerts for tasks and behaviors that, for some organizations, happen hundreds of times per day. Elevated Windows security group modifications anyone? This is where <a href="https://conf.splunk.com/files/2019/slides/SEC1538.pdf" target="_blank" rel="noopener noreffer">risk-based alerting</a> can help. In its most basic sense, risk-based alerting could be as simple as only triggering specific alerts for domain admins or high-risk users that are continuously failing simulated phishing tests. In a more complex configuration, risk-based alerting can involve noisy alerts still being configured, however, instead of notifying the SOC, a &ldquo;risk&rdquo; score counter is automatically adjusted for the asset or identity involved. Defenders are then able to monitor for users and systems with increasing risk scores in the environment over time.</p>
 </li>
 <li>
-<p><strong>Prioritize learning and development over alert SLAs</strong> - This one personally hits home with what I experienced and observed early on in my career. In far too many scenarios (especially in MSSP organizations) I&rsquo;ve observed that alert counts and SLAs become the main focus of the business instead of facilitating learning and development. Why is this? Simple, you can easily quantify alerts and time. It&rsquo;s important for defenders (especially newcomers in the field) to learn the ins and outs of various operating systems. They need to learn the various obfuscation techniques that attackers use to bypass security controls. They need to learn to script and code so that challenging problems can be solved faster. This won&rsquo;t happen when alert ticket queue SLAs control job performance.</p>
+<p><strong>Prioritize learning and development over alert SLAs</strong> - This one personally hits home with what I experienced and observed early on in my career. In far too many scenarios (especially in managed security service organizations) I&rsquo;ve observed that alert counts and SLAs become the main focus of the business instead of facilitating learning and development. Why is this? Simple, you can easily quantify alerts and time. It&rsquo;s important for defenders (especially newcomers in the field) to learn the ins and outs of various operating systems. They need to learn the various obfuscation techniques that attackers use to bypass security controls. They need to learn to script and code so that challenging problems can be solved faster. This won&rsquo;t happen when alert ticket queue SLAs control job performance.</p>
 </li>
 </ol>
-<p>As I look back at my first and second years working in the industry on a small SOC team, I am truly grateful for the experience that it offered me. I learned what it meant to work on a team and to utilize the strengths of others to tackle tough challenges. It was one hell of a ride during the early days for sure.</p>
-<p>Stay tuned for Part 2 of this blog series where I&rsquo;ll be diving into the next few years of my cyber adventure and how I began my battle with the beast that is known as job burnout.</p>
+<p>As I look back at my first and second years working in the industry on a small SOC team, I am truly grateful for the experience that it offered me. I learned what it meant to work on a team and to utilize the strengths of others to tackle tough challenges. It was one hell of a ride during the early times for sure.</p>
+<p>Stay tuned for <strong>Part 2</strong> of this blog series where I&rsquo;ll be diving into the next few years of my cyber adventure and how I began my battle with the beast that is known as job burnout.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
