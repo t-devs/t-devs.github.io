@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>CTF - Category - Incidental InfoSec Blog</title>
+        <link>https://incidentalinfosec.com/categories/ctf/</link>
+        <description>CTF - Category - Incidental InfoSec Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 20 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/ctf/" rel="self" type="application/rss+xml" /><item>
+    <title>GuidePoint Security CTF - August 2021</title>
+    <link>https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/</link>
+    <pubDate>Fri, 20 Aug 2021 00:00:00 &#43;0000</pubDate><author>
+        <name>devs</name>
+    </author><guid>https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/gps_ctf_august.webp" referrerpolicy="no-referrer">
+            </div>It&rsquo;s been a while since I had a chance to sit down and tackle a CTF. Lucky for me, GuidePoint Security recently ran their August iteration and it gave me a chance to brush off some cobwebs! I wasn&rsquo;t able to solve all the challenges (damn you Python!) but had a pretty good idea on how to approach most of &lsquo;em. Below are some write-ups on ones that I had fun trying to solve.]]></description>
+</item></channel>
+</rss>

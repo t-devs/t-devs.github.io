@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">GuidePoint Security CTF - August 2021 - Incidental InfoSec Blog</title><meta name="Description" content=""><meta property="og:title" content="GuidePoint Security CTF - August 2021" />
+<meta property="og:description" content="It&rsquo;s been a while since I had a chance to sit down and tackle a CTF. Lucky for me, GuidePoint Security recently ran their August iteration and it gave me a chance to brush off some cobwebs! I wasn&rsquo;t able to solve all the challenges (damn you Python!) but had a pretty good idea on how to approach most of &lsquo;em. Below are some write-ups on ones that I had fun trying to solve." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-20T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GuidePoint Security CTF - August 2021"/>
+<meta name="twitter:description" content="It&rsquo;s been a while since I had a chance to sit down and tackle a CTF. Lucky for me, GuidePoint Security recently ran their August iteration and it gave me a chance to brush off some cobwebs! I wasn&rsquo;t able to solve all the challenges (damn you Python!) but had a pretty good idea on how to approach most of &lsquo;em. Below are some write-ups on ones that I had fun trying to solve."/>
+<meta name="application-name" content="Incidental InfoSec Blog">
+<meta name="apple-mobile-web-app-title" content="Incidental InfoSec Blog">
+
+<meta name="theme-color" content="#ffffff"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><link rel="prev" href="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GuidePoint Security CTF - August 2021",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/incidentalinfosec.com\/posts\/guidepoint-security-ctf-august-2021\/"
+        },"genre": "posts","wordcount":  809 ,
+        "url": "https:\/\/incidentalinfosec.com\/posts\/guidepoint-security-ctf-august-2021\/","datePublished": "2021-08-20T00:00:00+00:00","dateModified": "2021-08-20T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "devs"},"author": {
+                "@type": "Person",
+                "name": "devs"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="" header-mobile=""><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let themeColorMeta = getMeta('theme-color');
+        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Incidental InfoSec Blog">Incidental InfoSec Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/series/"> Series </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Incidental InfoSec Blog">Incidental InfoSec Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/series/" title="">Series</a><a href="#" onclick="return false;" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">GuidePoint Security CTF - August 2021</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-20">2021-08-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-20">2021-08-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;809 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        data-src="/posts/guidepoint-security-ctf-august-2021/gps_ctf_august.webp"
+        data-srcset="/posts/guidepoint-security-ctf-august-2021/gps_ctf_august.webp, /posts/guidepoint-security-ctf-august-2021/gps_ctf_august.webp 1.5x, /posts/guidepoint-security-ctf-august-2021/gps_ctf_august.webp 2x"
+        data-sizes="auto"
+        alt="/posts/guidepoint-security-ctf-august-2021/gps_ctf_august.webp"
+        title="/posts/guidepoint-security-ctf-august-2021/gps_ctf_august.webp" height="222" width="835"
+    /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#twisting-sea">Twisting seA</a></li>
+    <li><a href="#sharkfail">Sharkfail</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>It&rsquo;s been a while since I had a chance to sit down and tackle a CTF. Lucky for me, GuidePoint Security recently ran their <a href="https://www.guidepointsecurity.com/resources/guidepoint-security-capture-the-flag-august-10/" target="_blank" rel="noopener noreffer">August iteration</a> and it gave me a chance to brush off some cobwebs! I wasn&rsquo;t able to solve all the challenges (damn you Python!) but had a pretty good idea on how to approach most of &lsquo;em. Below are some write-ups on ones that I had fun trying to solve.</p>
+<h2 id="twisting-sea">Twisting seA</h2>
+<p>For this Crypto challenge we were given a block of what appeared to be hex code.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text">4d6a41354d57466b4d7a5a6b4d7a5978597a67345a44566a4d7a49774d6d557a4e6d51354e7a56684d4455304e5455314e3249304e54426b4e575a6b59575a684d575
+1324d6a41334f575978596a59324f444e684d6d5131593256684e6a646c5a6a41345a544d79595464684d5455345a54566a5a47517a4f4451344e544e6b4947733959
+325a6b597a41785a546b305a6d51334d6a67784f5445314f54677a4d474e6c4f4455335a6d4d784f5441676154307859546c6b5a5759354f4456684d7a4d794e7a593
+24d544a694e5449784e6d49325932597a5a44466c4f413d3d
+</code></pre></div><p>Like in many other challenges, starting with <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreffer">CyberChef</a> can be a good first route when dealing with data formatting. Sure enough, if we transform the text &ldquo;From Hex&rdquo; we get a Base64 string that we can decode with CyberChef as well. This leaves us with the following.</p>
+<figure><img src="/images/twistingseA_1.webp" width="800"/>
+</figure>
+
+<p>Hmm, we see a k and an i variable. Being that this is a crypto challenge, maybe this is a key and an initialization vector? A quick search on Google for encryption algorithms that use keys and initialization vectors brings up block ciphers. One of the most common encryption methods out there, AES, is a block cipher. What&rsquo;s more is that the name of this challenge actually has AES in it (just backwards). Let&rsquo;s see if CyberChef can help us out again with its decryption recipe.</p>
+<figure><img src="/images/twistingseA_2.webp" width="700"/>
+</figure>
+
+<p>Well, we provided all the correct information in the recipe but the output string we receive isn&rsquo;t in the flag format. It looks close, but no cigar. What if we change the data format on the k or i variables?</p>
+<figure><img src="/images/twistingseA_3.webp" width="700"/>
+</figure>
+
+<p>Bingo! The initialization vector was in regular UTF8 encoding and not in hex. We can submit this flag and claim our points!</p>
+<h2 id="sharkfail">Sharkfail</h2>
+<p>In this challenge, we&rsquo;re provided a PCAP file named sharkfail.pcapng. I smell a forensics problem!</p>
+<p>As we load up Wireshark to start taking a peak at things, we&rsquo;re prompted with an error message about a potentially corrupt capture file. Interesting&hellip;let&rsquo;s keep digging.</p>
+<figure><img src="/images/sharkfail_1.webp" width="400"/>
+</figure>
+
+<p>One thing I like to do with PCAP challenges is to look at the protocol distributions within the capture. This can be done through Statistics -&gt; Protocol Hierarchy. We see that most the communication in this capture takes place over USB. Nice, we likely have some data transfer occurring.</p>
+<figure><img src="/images/sharkfail_2.webp" width="700"/>
+</figure>
+
+<p>If we do a bit of Googling on which fields / areas in Wireshark to look for with USB forensics, we stumble upon the field <code>usb.capdata</code>. If we apply this as a filter in Wireshark, we can observe a ton of &ldquo;URB_BULK in&rdquo; events that have occurred. There&rsquo;s a good chance our flag is probably somewhere in these data transfer events.</p>
+<figure><img src="/images/sharkfail_3.webp" width="1000"/>
+</figure>
+
+<p>At this point, I said to myself, &ldquo;How can we get this data out of Wireshark to decode and perform further analysis?&rdquo;. Unfortunately, after much trial and error, I learned that Wireshark doesn&rsquo;t appear to support the exporting of USB data objects (or at least I couldn&rsquo;t find a way&hellip;). Well shucks&hellip;.where to next? How about Wireshark&rsquo;s GUI-less brother TShark?</p>
+<p>Similar to Wireshark, filters can be applied when searching through capture traffic. We can take the output of <code>usb.capdata</code> events and attempt to replicate what Wireshark was showing us earlier. The tool &ldquo;xxd&rdquo; is our friend here.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tshark -r sharkfail.pcapng -T fields -e usb.capdata -Y usb.capdata <span class="p">|</span> xxd -r -p <span class="p">|</span> xxd &gt; decoded.raw
+</code></pre></div><p>This gives a raw hex dump file, <code>decoded.raw</code>, that we can dig into further. What we start to notice here is that there are a handful of human-readable characters showing throughout the hex dump.</p>
+<figure><img src="/images/sharkfail_4.webp" width="550"/>
+</figure>
+
+<p>This is where things got tricky for me. No matter what I tried, I could not seem to figure out anything relating to a flag within this data. During other CTF&rsquo;s, once I&rsquo;ve gotten to the point of dealing with a hex dump from a capture, it&rsquo;s typically time to start file carving. Finding corrupted or mismatched file headers in the hex dump, attempting to rebuild files from scratch, or looking further at patterns in the hex data itself would be smart directions to turn&hellip;but I&rsquo;m not smart.</p>
+<p>It was getting late and I was feeling defeated&hellip;I decided to throw everything but the kitchen sink at the hex file as well as the original PCAP. That&rsquo;s when it happened&hellip;</p>
+<figure><img src="/images/sharkfail_5.webp" width="600"/>
+</figure>
+
+<p>When in doubt, strings it out! This group of characters at the top appeared unique within the file and looked like it was in a familiar data format. Sure enough if we decode the characters from base 64, we have our flag.</p>
+<figure><img src="/images/sharkfail_6.webp" width="1000"/>
+</figure>
+
+<p>I definitely don&rsquo;t think I solved this challenge as it was intended and I imagine the PCAP file being corrupted likely had something to do with things but hey, I&rsquo;ll take what I can get!</p>
+<hr>
+<p>Shout out to <a href="https://twitter.com/offsec_ginger" target="_blank" rel="noopener noreffer">Alex Williams</a> and <a href="https://www.guidepointsecurity.com" target="_blank" rel="noopener noreffer">GuidePoint Security</a> for putting on a great event. I&rsquo;m looking forward to the next one!</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-08-20</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="#" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/soc-work-a-walk-through-the-trenches-part-1/" class="prev" rel="prev" title="SOC work. A walk through the trenches. [Part 1]"><i class="fas fa-angle-left fa-fw"></i>SOC work. A walk through the trenches. [Part 1]</a></div>
+</div>
+</article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-168058506-2');
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-168058506-2" async></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false}};</script></div>
+</body>
+
+</html>
