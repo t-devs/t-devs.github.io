@@ -31,7 +31,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/incidentalinfosec.com\/posts\/corctf-2021\/"
-        },"genre": "posts","wordcount":  455 ,
+        },"genre": "posts","wordcount":  472 ,
         "url": "https:\/\/incidentalinfosec.com\/posts\/corctf-2021\/","datePublished": "2021-08-24T00:00:00+00:00","dateModified": "2021-08-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
@@ -129,7 +129,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;455 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;472 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -174,7 +174,7 @@
 <p>One way of performing reconnaissance with GraphQL is to see if introspection queries are allowed. Introspection queries essentially allow us to learn and gather information about what types of information the GraphQL endpoint accepts. It&rsquo;s generally not a good idea to enable introspection queries for a web app unless you specifically need to offer API services to clients. Let&rsquo;s see if our web application allows us to use them!</p>
 <p>In order to easily manipulate GraphQL queries, I used the Chrome extension <a href="https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja?hl=en" target="_blank" rel="noopener noreffer">Altair GraphQL Client</a>.</p>
 <figure><img src="/images/devme_3.webp"/><figcaption>
-            <h4>Figure 1: GraphQL Schema Query</h4>
+            <h4>Figure 3: GraphQL schema query</h4>
         </figcaption>
 </figure>
 
@@ -182,15 +182,21 @@
 <figure><img src="/images/devme_4.webp" width="850"/>
 </figure>
 
-<figure><img src="/images/devme_5.webp" width="850"/>
+<figure><img src="/images/devme_5.webp" width="850"/><figcaption>
+            <h4>Figures 3 &#43; 4: User and Query types</h4>
+        </figcaption>
 </figure>
 
 <p>Interesting, we see that the <code>Query</code> type has something that potentially involves the flag. If we query the <code>flag</code> field directly, what happens?</p>
-<figure><img src="/images/devme_7.webp" width="850"/>
+<figure><img src="/images/devme_7.webp" width="850"/><figcaption>
+            <h4>Figure 5: flag query</h4>
+        </figcaption>
 </figure>
 
 <p>It looks like the <code>flag</code> field requires a token in order to return any information. Next, based on the previous schema queries and our original BurpSuite response, I figured that a <code>user</code> likely has a <code>username</code> and <code>token</code>. I attempted to query this (essentially dumping the database). Great success!</p>
-<figure><img src="/images/devme_6.webp" width="850"/>
+<figure><img src="/images/devme_6.webp" width="850"/><figcaption>
+            <h4>Figure 6: User info dump</h4>
+        </figcaption>
 </figure>
 
 <p>We now have a dump of the user database and can use the <code>admin</code> token to query the <code>flag</code> field for the flag!</p>
