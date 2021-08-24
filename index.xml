@@ -3,9 +3,18 @@
         <title>Incidental InfoSec Blog</title>
         <link>https://incidentalinfosec.com/</link>
         <description>Incidental InfoSec Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 20 Aug 2021 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://incidentalinfosec.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>CorCTF - 2021</title>
+    <link>https://incidentalinfosec.com/posts/corctf-2021/</link>
+    <pubDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</pubDate><author>
+        <name>devs</name>
+    </author><guid>https://incidentalinfosec.com/posts/corctf-2021/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/corCTF.webp" referrerpolicy="no-referrer">
+            </div>Lately, I&rsquo;ve been keeping my eye out for interesting CTF&rsquo;s to compete in. This past weekend, the corCTF team hosted their own event and boy was it a tough one. Being primarily a forensics guy, I was definitely out of my comfort zone with many of the challenges being binary exploitation, reversing, and cryptography. I clung onto anything that looked familiar and in the end was able to crack a web challenge for a few points.]]></description>
+</item><item>
     <title>GuidePoint Security CTF - August 2021</title>
     <link>https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/</link>
     <pubDate>Fri, 20 Aug 2021 00:00:00 &#43;0000</pubDate><author>

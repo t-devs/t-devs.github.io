@@ -20,7 +20,7 @@
 
 <meta name="theme-color" content="#ffffff"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><link rel="prev" href="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><link rel="prev" href="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><link rel="next" href="https://incidentalinfosec.com/posts/corctf-2021/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -31,7 +31,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/incidentalinfosec.com\/posts\/guidepoint-security-ctf-august-2021\/"
-        },"genre": "posts","wordcount":  809 ,
+        },"genre": "posts","wordcount":  850 ,
         "url": "https:\/\/incidentalinfosec.com\/posts\/guidepoint-security-ctf-august-2021\/","datePublished": "2021-08-20T00:00:00+00:00","dateModified": "2021-08-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
@@ -129,7 +129,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-20">2021-08-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-20">2021-08-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;809 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-20">2021-08-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-20">2021-08-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;850 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -157,49 +157,67 @@
 325a6b597a41785a546b305a6d51334d6a67784f5445314f54677a4d474e6c4f4455335a6d4d784f5441676154307859546c6b5a5759354f4456684d7a4d794e7a593
 24d544a694e5449784e6d49325932597a5a44466c4f413d3d
 </code></pre></div><p>Like in many other challenges, starting with <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreffer">CyberChef</a> can be a good first route when dealing with data formatting. Sure enough, if we transform the text &ldquo;From Hex&rdquo; we get a Base64 string that we can decode with CyberChef as well. This leaves us with the following.</p>
-<figure><img src="/images/twistingseA_1.webp" width="800"/>
+<figure><img src="/images/twistingseA_1.webp" width="800"/><figcaption>
+            <h4>Figure 1: CyberChef Hex decode</h4>
+        </figcaption>
 </figure>
 
 <p>Hmm, we see a <code>k</code> and an <code>i</code> variable. Being that this is a crypto challenge, maybe this is a key and an initialization vector? A quick search on Google for encryption algorithms that use keys and initialization vectors brings up block ciphers. One of the most common encryption methods out there, AES, is a block cipher. What&rsquo;s more is that the name of this challenge actually has AES in it (just backwards). Let&rsquo;s see if CyberChef can help us out again with its decryption recipe.</p>
-<figure><img src="/images/twistingseA_2.webp" width="700"/>
+<figure><img src="/images/twistingseA_2.webp" width="700"/><figcaption>
+            <h4>Figure 2: CyberChef AES decrypt</h4>
+        </figcaption>
 </figure>
 
 <p>Well, we provided all the correct information in the recipe but the output string we receive isn&rsquo;t in the flag format. It looks close, but no cigar. What if we change the data format on the <code>k</code> or <code>i</code> variables?</p>
-<figure><img src="/images/twistingseA_3.webp" width="700"/>
+<figure><img src="/images/twistingseA_3.webp" width="700"/><figcaption>
+            <h4>Figure 3: CyberChef AES decrypt</h4>
+        </figcaption>
 </figure>
 
 <p>Bingo! The initialization vector was in regular UTF8 encoding and not in hex. We can submit this flag and claim our points!</p>
 <h2 id="sharkfail">Sharkfail</h2>
 <p>In this challenge, we&rsquo;re provided a PCAP file named sharkfail.pcapng. I smell a forensics problem!</p>
 <p>As we load up Wireshark to start taking a peak at things, we&rsquo;re prompted with an error message about a potentially corrupt capture file. Interesting&hellip;let&rsquo;s keep digging.</p>
-<figure><img src="/images/sharkfail_1.webp" width="400"/>
+<figure><img src="/images/sharkfail_1.webp" width="400"/><figcaption>
+            <h4>Figure 4: Corrupted PCAP</h4>
+        </figcaption>
 </figure>
 
 <p>One thing I like to do with PCAP challenges is to look at the protocol distributions within the capture. This can be done through Statistics -&gt; Protocol Hierarchy. We see that most the communication in this capture takes place over USB. Nice, we likely have some data transfer occurring.</p>
-<figure><img src="/images/sharkfail_2.webp" width="700"/>
+<figure><img src="/images/sharkfail_2.webp" width="700"/><figcaption>
+            <h4>Figure 5: Protocol Hierarchy</h4>
+        </figcaption>
 </figure>
 
 <p>If we do a bit of Googling on which fields / areas in Wireshark to look for with USB forensics, we stumble upon the field <code>usb.capdata</code>. If we apply this as a filter in Wireshark, we can observe a ton of &ldquo;URB_BULK in&rdquo; events that have occurred. There&rsquo;s a good chance our flag is probably somewhere in these data transfer events.</p>
-<figure><img src="/images/sharkfail_3.webp" width="1000"/>
+<figure><img src="/images/sharkfail_3.webp" width="1000"/><figcaption>
+            <h4>Figure 6: Wireshark usb.capdata</h4>
+        </figcaption>
 </figure>
 
-<p>At this point, I said to myself, &ldquo;How can we get this data out of Wireshark to decode and perform further analysis?&rdquo;. Unfortunately, after much trial and error, I learned that Wireshark doesn&rsquo;t appear to support the exporting of USB data objects (or at least I couldn&rsquo;t find a way&hellip;). Well shucks&hellip;.where to next? How about Wireshark&rsquo;s GUI-less brother TShark?</p>
+<p>At this point, I said to myself, &ldquo;How can we get this data out of Wireshark to decode and perform further analysis?&rdquo;. Unfortunately, after much trial and error, I learned that Wireshark doesn&rsquo;t appear to support the exporting of USB data objects (or at least I couldn&rsquo;t find a way&hellip;). Well shucks&hellip;.where to next? How about Wireshark&rsquo;s GUI-less brother <code>tshark</code>?</p>
 <p>Similar to Wireshark, filters can be applied when searching through capture traffic. We can take the output of <code>usb.capdata</code> events and attempt to replicate what Wireshark was showing us earlier. The tool <code>xxd</code> is our friend here.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">tshark -r sharkfail.pcapng -T fields -e usb.capdata -Y usb.capdata <span class="p">|</span> xxd -r -p <span class="p">|</span> xxd &gt; decoded.raw
 </code></pre></div><p>This gives a raw hex dump file, <code>decoded.raw</code>, that we can dig into further. What we start to notice here is that there are a handful of human-readable characters showing throughout the hex dump.</p>
-<figure><img src="/images/sharkfail_4.webp" width="550"/>
+<figure><img src="/images/sharkfail_4.webp" width="550"/><figcaption>
+            <h4>Figure 7: usb.capdata hex dump</h4>
+        </figcaption>
 </figure>
 
 <p>This is where things got tricky for me. No matter what I tried, I could not seem to figure out anything relating to a flag within this data. During other CTF&rsquo;s, once I&rsquo;ve gotten to the point of dealing with a hex dump from a capture, it&rsquo;s typically time to start file carving. Finding corrupted or mismatched file headers in the hex dump, attempting to rebuild files from scratch, or looking further at patterns in the hex data itself would be smart directions to turn&hellip;but I&rsquo;m not smart.</p>
 <p>It was getting late and I was feeling defeated&hellip;I decided to throw everything but the kitchen sink at the hex file as well as the original PCAP. That&rsquo;s when it happened&hellip;</p>
-<figure><img src="/images/sharkfail_5.webp" width="600"/>
+<figure><img src="/images/sharkfail_5.webp" width="600"/><figcaption>
+            <h4>Figure 8: Strings of PCAP</h4>
+        </figcaption>
 </figure>
 
 <p>When in doubt, <code>strings</code> it out! This group of characters at the top appeared unique within the file and looked like it was in a familiar data format. Sure enough if we decode the characters from base 64, we have our flag.</p>
-<figure><img src="/images/sharkfail_6.webp" width="1000"/>
+<figure><img src="/images/sharkfail_6.webp" width="1000"/><figcaption>
+            <h4>Figure 9: Base64 Decode</h4>
+        </figcaption>
 </figure>
 
-<p>I definitely don&rsquo;t think I solved this challenge as it was intended and I imagine the PCAP file being corrupted likely had something to do with things but hey, I&rsquo;ll take what I can get!</p>
+<p>I definitely don&rsquo;t think I solved this challenge as it was intended and I imagine the .pcapng file being corrupted likely had something to do with things but hey, I&rsquo;ll take what I can get!</p>
 <hr>
 <p>Shout out to <a href="https://twitter.com/offsec_ginger" target="_blank" rel="noopener noreffer">Alex Williams</a> and <a href="https://www.guidepointsecurity.com" target="_blank" rel="noopener noreffer">GuidePoint Security</a> for putting on a great event. I&rsquo;m looking forward to the next one!</p>
 </div><div class="post-footer" id="post-footer">
@@ -225,7 +243,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/soc-work-a-walk-through-the-trenches-part-1/" class="prev" rel="prev" title="SOC work. A walk through the trenches. [Part 1]"><i class="fas fa-angle-left fa-fw"></i>SOC work. A walk through the trenches. [Part 1]</a></div>
+    <div class="post-nav"><a href="/posts/soc-work-a-walk-through-the-trenches-part-1/" class="prev" rel="prev" title="SOC work. A walk through the trenches. [Part 1]"><i class="fas fa-angle-left fa-fw"></i>SOC work. A walk through the trenches. [Part 1]</a>
+            <a href="/posts/corctf-2021/" class="next" rel="next" title="CorCTF - 2021">CorCTF - 2021<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
         </main><footer class="footer">
