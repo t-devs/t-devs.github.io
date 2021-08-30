@@ -3,7 +3,18 @@
         <title>CTF - Category - Incidental InfoSec Blog</title>
         <link>https://incidentalinfosec.com/categories/ctf/</link>
         <description>CTF - Category - Incidental InfoSec Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/ctf/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 30 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/ctf/" rel="self" type="application/rss+xml" /><item>
+    <title>WORMCON CTF - 2021</title>
+    <link>https://incidentalinfosec.com/posts/wormcon-ctf-2021/</link>
+    <pubDate>Mon, 30 Aug 2021 00:00:00 &#43;0000</pubDate><author>
+        <name>devs</name>
+    </author><guid>https://incidentalinfosec.com/posts/wormcon-ctf-2021/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/wormcon.webp" referrerpolicy="no-referrer">
+            </div>WORMCON CTF occurred this weekend and I had a fun time digging through a handful of Forensics and Networking challenges.
+Network At Risk (Part 2) This challenge provided a PCAP file that contained quite a bit of FTP traffic. As I&rsquo;m sure most know, FTP does not encrypt data while in transit. This provided me with a good starting point to try and gather some information.
+ Figure 1: Protocol hierarchy   Sure enough, one of the first things I noticed in the FTP requests is a username and password.]]></description>
+</item><item>
     <title>CorCTF - 2021</title>
     <link>https://incidentalinfosec.com/posts/corctf-2021/</link>
     <pubDate>Tue, 24 Aug 2021 00:00:00 &#43;0000</pubDate><author>
