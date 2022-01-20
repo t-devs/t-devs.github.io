@@ -33,7 +33,7 @@ For in-person events, this warning may be enough to ward off the rogue mobile ph
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/incidentalinfosec.com\/posts\/splunking-dlp-data-with-a-side-of-response\/"
-        },"genre": "posts","wordcount":  592 ,
+        },"genre": "posts","wordcount":  591 ,
         "url": "https:\/\/incidentalinfosec.com\/posts\/splunking-dlp-data-with-a-side-of-response\/","datePublished": "2022-01-19T00:00:00+00:00","dateModified": "2022-01-19T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
@@ -128,14 +128,14 @@ For in-person events, this warning may be enough to ward off the rogue mobile ph
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/blue-team/"><i class="far fa-folder fa-fw"></i>Blue Team</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;592 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;591 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="content" id="content"><p>Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?</p>
 <p>For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere). Don&rsquo;t believe me?</p>
 <p>The following sections outline how I tested this theory and built out a very rough active response workflow for preventing data loss scenarios of this type.</p>
 <h2 id="system-level-log-monitoring" class="headerLink">
     <a href="#system-level-log-monitoring" class="header-mark"></a>System Level Log Monitoring</h2><p>I should mention before going further that although the latest wiz-bangy EDR tool isn&rsquo;t needed for this setup, there needs to be some method, tool, or mechanism of grabbing system level file creation events from the to-be monitored devices (preferably quickly).</p>
-<p>For those unfamiliar, there are some great free tools out there that can be deployed for this purpose. They include Velociraptor <!-- raw HTML omitted --> and everyone&rsquo;s favorite, Sysmon <!-- raw HTML omitted -->. Additionally, for macOS systems, the product Jamf Protect works very well for remotely collecting Apple Unified Log events.</p>
+<p>For those unfamiliar, there are some great free tools out there that can be deployed for this purpose. They include Velociraptor and everyone&rsquo;s favorite, Sysmon. Additionally, for macOS systems, the product Jamf Protect works very well for remotely collecting Apple Unified Log events.</p>
 <p>Most organizations these days are sending various categories of event logs to a SIEM (i.e. Splunk) and endpoint data should be no different. Features such as Splunk HEC and Universal Forwarders make it easy to pull in this information.</p>
 <p>So what do we look for in the event logs? In our example scenario of a meeting participant taking an &ldquo;unauthorized&rdquo; screen capture of sensitive content, it&rsquo;s pretty easy. Any file creation events that occur from the devices default screen capture application are likely to be files of interest.</p>
 <p>Jamf Protect even comes with an out-of-box analytic for screenshots being taken on a system.
@@ -144,7 +144,7 @@ For in-person events, this warning may be enough to ward off the rogue mobile ph
 <p>Now that the event has been logged, a SHA256 hash should be included within the event. We can utilize Splunk&rsquo;s search scheduling to regularly populate a lookup file with any and all file hashes that are observed from the screenshot events. But then what?</p>
 <h2 id="active-response-actions" class="headerLink">
     <a href="#active-response-actions" class="header-mark"></a>Active Response Actions</h2><p>Splunk alert actions are great ways of integrating Splunk with other systems and Security, Orchestration, Automation, and Response (SOAR) platforms. With regards to this situation, one configuration that could be put in place is that, on a regular interval, Splunk can send the file hashes included in the previously created lookup file to a SOAR platform. The SOAR platform can interface with the organization&rsquo;s DLP product, email platform, etc. to block the specified file hashes from being transferred to external locations. Despite email controls, I continue to see email being a common mechanism for data exfiltration by insider threat actors.</p>
-<p>I&rsquo;m no expert when it comes to data loss prevention (DLP) and there are definitely far better (and expensive product) methods for performing what I outlined today. Hell enforcing stricter system controls around screenshot captures and copy &amp; paste are likely more effective. However, I realize going those routes may not work for everyone. This post is my attempt at providing a creative alternative solution.</p>
+<p>I&rsquo;m no expert when it comes to data loss prevention (DLP) and there are definitely far better (and expensive product) methods for performing what I outlined today. Hell, enforcing stricter system controls around screenshot captures and copy &amp; paste are likely more effective. However, I realize going those routes may not work for everyone. This post is my attempt at providing a creative alternative solution.</p>
 </div>
 
         <div class="post-footer" id="post-footer">
