@@ -19,9 +19,9 @@
 <meta name="application-name" content="Incidental InfoSec Blog">
 <meta name="apple-mobile-web-app-title" content="Incidental InfoSec Blog">
 
-<meta name="theme-color" content="#ffffff"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><link rel="next" href="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://incidentalinfosec.com/posts/soc-work-a-walk-through-the-trenches-part-1/" /><link rel="next" href="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -32,7 +32,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/incidentalinfosec.com\/posts\/soc-work-a-walk-through-the-trenches-part-1\/"
-        },"genre": "posts","wordcount":  1016 ,
+        },"genre": "posts","wordcount":  1014 ,
         "url": "https:\/\/incidentalinfosec.com\/posts\/soc-work-a-walk-through-the-trenches-part-1\/","datePublished": "2021-08-08T00:00:00+00:00","dateModified": "2021-08-08T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
@@ -47,8 +47,8 @@
         function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
         function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
         if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('light' === 'light' || 'light' === 'dark' || 'light' === 'black') setTheme('light'), saveTheme('light'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
-        let themeColorMeta = getMeta('theme-color');
-        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
     </script>
     <div id="back-to-top"></div>
     <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
@@ -123,14 +123,11 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><div class="toc" id="toc-auto">
-        <h2 class="toc-title">Contents</h2>
-        <div class="toc-content" id="toc-content-auto"></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">SOC work. A walk through the trenches. [Part 1]</h1><div class="post-meta">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">SOC work. A walk through the trenches. [Part 1]</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/careers/"><i class="far fa-folder fa-fw"></i>Careers</a></span>&nbsp;<span class="post-category">and</span>&nbsp;<span class="post-series">series <a href="/series/my-journey-in-cybersecurity/"><i class="far fa-list-alt fa-fw"></i>My journey in cybersecurity</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1016 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-08">2021-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1014 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -139,21 +136,10 @@
         data-sizes="auto"
         alt="/posts/soc-work-a-walk-through-the-trenches-part-1/military.webp"
         title="/posts/soc-work-a-walk-through-the-trenches-part-1/military.webp" height="405" width="1206"
-    /></div><div class="details toc" id="toc-static"  kept="">
-                <div class="details-summary toc-title">
-                    <span>Contents</span>
-                    <span><i class="details-icon fas fa-angle-right"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#in-the-beginning">In the beginning</a></li>
-    <li><a href="#rough-waters">Rough waters</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><p>It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?&rdquo;. I know I did&hellip;</p>
+    /></div><div class="content" id="content"><p>It&rsquo;s no secret that working in a Security Operations Center (SOC) can be a demanding, thankless, and tough job (with it only getting tougher). This is especially true for folks just getting started in the industry who are building the foundational skills required for career progression. Working long hours, weekends, holidays&hellip;this is the side of cyber they don&rsquo;t tell you about&hellip; If you&rsquo;re not prepared for it, you might start asking yourself &ldquo;What the hell did I just get myself into?&rdquo;. I know I did&hellip;</p>
 <p>Over the last several years, I&rsquo;ve somehow managed to convince my peers enough that I know what I&rsquo;m doing. This has granted me the opportunity to hold a handful of positions either operating in or working closely with SOC teams. I hope through these blog posts I can shed some light on the lessons that I&rsquo;ve learned working on the front lines. If nothing else, if I can encourage any beat-up, stressed-out, and just plain tired folks in the industry to keep up the good fight, then this series will have been a success.</p>
-<h2 id="in-the-beginning">In the beginning</h2>
-<p>Starting in 2015, I began my voyage trying to break into the InfoSec field as naive college student eager to find my first gig. I had somehow managed to snag an internship earlier in the year working at a cybersecurity start-up that specialized in consulting. You know&hellip;what could be better than having the new intern bang on keyboards inside million dollar customer networks?</p>
+<h2 id="in-the-beginning" class="headerLink">
+    <a href="#in-the-beginning" class="header-mark"></a>In the beginning</h2><p>Starting in 2015, I began my voyage trying to break into the InfoSec field as naive college student eager to find my first gig. I had somehow managed to snag an internship earlier in the year working at a cybersecurity start-up that specialized in consulting. You know&hellip;what could be better than having the new intern bang on keyboards inside million dollar customer networks?</p>
 <figure><img src="/images/no_idea_dog.webp" width="400"/>
 </figure>
 
@@ -167,8 +153,8 @@
 <figure><img src="/images/fp_overload.webp" width="300"/>
 </figure>
 
-<h2 id="rough-waters">Rough waters</h2>
-<p>If there&rsquo;s one thing that can kill a SOC team&rsquo;s motivation and drive to learn, it&rsquo;s event overload and triaging the same noisy alerts day in, day out. Sounds like the definition of insanity, doesn&rsquo;t it? This quickly becomes a slippery slope with the unfortunate part being that it&rsquo;s not a unique problem affecting a few organizations here and there&hellip;it impacts a large majority of companies.</p>
+<h2 id="rough-waters" class="headerLink">
+    <a href="#rough-waters" class="header-mark"></a>Rough waters</h2><p>If there&rsquo;s one thing that can kill a SOC team&rsquo;s motivation and drive to learn, it&rsquo;s event overload and triaging the same noisy alerts day in, day out. Sounds like the definition of insanity, doesn&rsquo;t it? This quickly becomes a slippery slope with the unfortunate part being that it&rsquo;s not a unique problem affecting a few organizations here and there&hellip;it impacts a large majority of companies.</p>
 <p>So what happens if false positive alert fatigue is not solved early? In my experience, nothing good.</p>
 <ul>
 <li>Career growth and progression is stunted.</li>
@@ -189,7 +175,9 @@
 </ol>
 <p>As I look back at my first and second years working in the industry on a small SOC team, I am truly grateful for the experience that it offered me. I learned what it meant to work on a team and to utilize the strengths of others to tackle tough challenges. It was one hell of a ride during the early times for sure.</p>
 <p>Stay tuned for Part 2 of this blog series where I&rsquo;ll be diving into the next few years of my cyber adventure and how I began my battle with the beast that is known as job burnout.</p>
-</div><div class="post-footer" id="post-footer">
+</div>
+
+        <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -208,7 +196,7 @@
     <div class="post-info-more">
         <section class="post-tags"></section>
         <section>
-            <span><a href="#" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
@@ -218,6 +206,9 @@
 </article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
         </div></footer></div>
 
     <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
@@ -230,7 +221,7 @@
             gtag('config', 'UA-168058506-2');
         </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-168058506-2" async></script></div>
 
-<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false}};</script></div>
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script></div>
 </body>
 
 </html>

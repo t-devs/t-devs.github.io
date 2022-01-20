@@ -3,7 +3,14 @@
         <title>Categories - Category - Incidental InfoSec Blog</title>
         <link>https://incidentalinfosec.com/categories/</link>
         <description>Categories - Category - Incidental InfoSec Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 30 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 19 Jan 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Blue Team</title>
+    <link>https://incidentalinfosec.com/categories/blue-team/</link>
+    <pubDate>Wed, 19 Jan 2022 00:00:00 &#43;0000</pubDate><author>
+        <name>Author</name>
+    </author><guid>https://incidentalinfosec.com/categories/blue-team/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>CTF</title>
     <link>https://incidentalinfosec.com/categories/ctf/</link>
     <pubDate>Mon, 30 Aug 2021 00:00:00 &#43;0000</pubDate><author>
@@ -16,13 +23,6 @@
     <pubDate>Sun, 08 Aug 2021 00:00:00 &#43;0000</pubDate><author>
         <name>Author</name>
     </author><guid>https://incidentalinfosec.com/categories/careers/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Purple Team</title>
-    <link>https://incidentalinfosec.com/categories/purple-team/</link>
-    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate><author>
-        <name>Author</name>
-    </author><guid>https://incidentalinfosec.com/categories/purple-team/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

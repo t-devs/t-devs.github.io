@@ -5,34 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title class="pjax-title">CorCTF - 2021 - Incidental InfoSec Blog</title><meta name="Description" content=""><meta property="og:title" content="CorCTF - 2021" />
-<meta property="og:description" content="Lately, I&rsquo;ve been keeping my eye out for interesting CTF&rsquo;s to compete in. This past weekend, the corCTF team hosted their own event and boy was it a tough one. Being primarily a forensics guy, I was definitely out of my comfort zone with many of the challenges being binary exploitation, reversing, and cryptography. I clung onto anything that looked familiar and in the end was able to crack a web challenge for a few points." />
+    <title class="pjax-title">Splunking DLP data with a side of active response - Incidental InfoSec Blog</title><meta name="Description" content=""><meta property="og:title" content="Splunking DLP data with a side of active response" />
+<meta property="og:description" content="Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?
+For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere)." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://incidentalinfosec.com/posts/corctf-2021/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-08-24T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-08-24T00:00:00+00:00" />
+<meta property="og:url" content="https://incidentalinfosec.com/posts/splunking-dlp-data-with-a-side-of-response/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-01-19T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="CorCTF - 2021"/>
-<meta name="twitter:description" content="Lately, I&rsquo;ve been keeping my eye out for interesting CTF&rsquo;s to compete in. This past weekend, the corCTF team hosted their own event and boy was it a tough one. Being primarily a forensics guy, I was definitely out of my comfort zone with many of the challenges being binary exploitation, reversing, and cryptography. I clung onto anything that looked familiar and in the end was able to crack a web challenge for a few points."/>
+<meta name="twitter:title" content="Splunking DLP data with a side of active response"/>
+<meta name="twitter:description" content="Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?
+For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere)."/>
 <meta name="application-name" content="Incidental InfoSec Blog">
 <meta name="apple-mobile-web-app-title" content="Incidental InfoSec Blog">
 
 <meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://incidentalinfosec.com/posts/corctf-2021/" /><link rel="prev" href="https://incidentalinfosec.com/posts/guidepoint-security-ctf-august-2021/" /><link rel="next" href="https://incidentalinfosec.com/posts/wormcon-ctf-2021/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="https://incidentalinfosec.com/posts/splunking-dlp-data-with-a-side-of-response/" /><link rel="prev" href="https://incidentalinfosec.com/posts/wormcon-ctf-2021/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "CorCTF - 2021",
+        "headline": "Splunking DLP data with a side of active response",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/incidentalinfosec.com\/posts\/corctf-2021\/"
-        },"genre": "posts","wordcount":  471 ,
-        "url": "https:\/\/incidentalinfosec.com\/posts\/corctf-2021\/","datePublished": "2021-08-24T00:00:00+00:00","dateModified": "2021-08-24T00:00:00+00:00","publisher": {
+            "@id": "https:\/\/incidentalinfosec.com\/posts\/splunking-dlp-data-with-a-side-of-response\/"
+        },"genre": "posts","wordcount":  592 ,
+        "url": "https:\/\/incidentalinfosec.com\/posts\/splunking-dlp-data-with-a-side-of-response\/","datePublished": "2022-01-19T00:00:00+00:00","dateModified": "2022-01-19T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
                 "@type": "Person",
@@ -122,81 +124,34 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CorCTF - 2021</h1><div class="post-meta">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Splunking DLP data with a side of active response</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
-                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-08-24">2021-08-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;471 words&nbsp;
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/blue-team/"><i class="far fa-folder fa-fw"></i>Blue Team</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;592 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
-        </div><div class="featured-image"><img
-        class="lazyload"
-        data-src="/posts/corctf-2021/corCTF.webp"
-        data-srcset="/posts/corctf-2021/corCTF.webp, /posts/corctf-2021/corCTF.webp 1.5x, /posts/corctf-2021/corCTF.webp 2x"
-        data-sizes="auto"
-        alt="/posts/corctf-2021/corCTF.webp"
-        title="/posts/corctf-2021/corCTF.webp" height="271" width="1000"
-    /></div><div class="content" id="content"><p>Lately, I&rsquo;ve been keeping my eye out for interesting CTF&rsquo;s to compete in. This past weekend, the <a href="https://ctftime.org/event/1364" target="_blank" rel="noopener noreffer">corCTF team</a> hosted their own event and boy was it a tough one. Being primarily a forensics guy, I was definitely out of my comfort zone with many of the challenges being binary exploitation, reversing, and cryptography. I clung onto anything that looked familiar and in the end was able to crack a web challenge for a few points. Here&rsquo;s to getting stronger with reversing + coding for the next go around!</p>
-<h2 id="devme" class="headerLink">
-    <a href="#devme" class="header-mark"></a>devme</h2><p>In this challenge we were provided a pretty straightforward web page with a few buttons and a submission form. You can probably guess where my focus turned right out of the gate. Let&rsquo;s check out how user input gets handled.</p>
-<figure><img src="/images/devme_web1.webp" width="600"/>
-</figure>
-
-<figure><img src="/images/devme_web2.webp" width="600"/><figcaption>
-            <h4>Figure 1: Website preview</h4>
-        </figcaption>
-</figure>
-
-<p>I fired up BurpSuite to see what happens when a test email address is submitted. Our content ends up getting POST&rsquo;d to a <code>/graphl</code> endpoint and we receive some type of hashed username as the response.</p>
-<figure><img src="/images/devme_1.webp" width="1000"/><figcaption>
-            <h4>Figure 2: Digging in with BurpSuite</h4>
-        </figcaption>
-</figure>
-
-<p>Seeing GraphQL in this challenge peeked my interest and I decided to spend some time learning about common attack scenarios with the technology. I stumbled across a pretty good video from Bugcrowd (below) that highlights a number of ways in which you can develop an attack methodology.</p>
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/NPDp7GHmMa0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-<p>One way of performing reconnaissance with GraphQL is to see if introspection queries are allowed. Introspection queries essentially allow us to learn and gather information about what types of information the GraphQL endpoint accepts. It&rsquo;s generally not a good idea to enable introspection queries for a web app unless you specifically need to offer API services to clients. Let&rsquo;s see if our web application allows us to use them!</p>
-<p>In order to easily manipulate GraphQL queries, I used the Chrome extension <a href="https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja?hl=en" target="_blank" rel="noopener noreffer">Altair GraphQL Client</a>.</p>
-<figure><img src="/images/devme_3.webp"/><figcaption>
-            <h4>Figure 3: GraphQL schema query</h4>
-        </figcaption>
-</figure>
-
-<p>By using a generic introspection query, we see that there are a number of various schema types that we can potentially interact with. The <code>User</code> and <code>Query</code> types looked interesting, I sought to dig further into them. The following screenshots show me fumbling through and gathering additional data.</p>
-<figure><img src="/images/devme_4.webp" width="850"/>
-</figure>
-
-<figure><img src="/images/devme_5.webp" width="850"/><figcaption>
-            <h4>Figures 3 &#43; 4: User and Query types</h4>
-        </figcaption>
-</figure>
-
-<p>Interesting, we see that the <code>Query</code> type has something that potentially involves the flag. If we query the <code>flag</code> field directly, what happens?</p>
-<figure><img src="/images/devme_7.webp" width="850"/><figcaption>
-            <h4>Figure 5: flag query</h4>
-        </figcaption>
-</figure>
-
-<p>It looks like the <code>flag</code> field requires a token in order to return any information. Next, based on the previous schema queries and our original BurpSuite response, I figured that a <code>user</code> likely has a <code>username</code> and <code>token</code>. I attempted to query this (essentially dumping the database). Great success!</p>
-<figure><img src="/images/devme_6.webp" width="850"/><figcaption>
-            <h4>Figure 6: User info dump</h4>
-        </figcaption>
-</figure>
-
-<p>We now have a dump of the user database and can use the <code>admin</code> token to query the <code>flag</code> field for the flag!</p>
-<figure><img src="/images/devme_8.webp" width="850"/>
-</figure>
-
+        </div><div class="content" id="content"><p>Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?</p>
+<p>For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere). Don&rsquo;t believe me?</p>
+<p>The following sections outline how I tested this theory and built out a very rough active response workflow for preventing data loss scenarios of this type.</p>
+<h2 id="system-level-log-monitoring" class="headerLink">
+    <a href="#system-level-log-monitoring" class="header-mark"></a>System Level Log Monitoring</h2><p>I should mention before going further that although the latest wiz-bangy EDR tool isn&rsquo;t needed for this setup, there needs to be some method, tool, or mechanism of grabbing system level file creation events from the to-be monitored devices (preferably quickly).</p>
+<p>For those unfamiliar, there are some great free tools out there that can be deployed for this purpose. They include Velociraptor <!-- raw HTML omitted --> and everyone&rsquo;s favorite, Sysmon <!-- raw HTML omitted -->. Additionally, for macOS systems, the product Jamf Protect works very well for remotely collecting Apple Unified Log events.</p>
+<p>Most organizations these days are sending various categories of event logs to a SIEM (i.e. Splunk) and endpoint data should be no different. Features such as Splunk HEC and Universal Forwarders make it easy to pull in this information.</p>
+<p>So what do we look for in the event logs? In our example scenario of a meeting participant taking an &ldquo;unauthorized&rdquo; screen capture of sensitive content, it&rsquo;s pretty easy. Any file creation events that occur from the devices default screen capture application are likely to be files of interest.</p>
+<p>Jamf Protect even comes with an out-of-box analytic for screenshots being taken on a system.
+<a href="https://docs.jamf.com/jamf-protect/documentation/Security.html" target="_blank" rel="noopener noreffer">https://docs.jamf.com/jamf-protect/documentation/Security.html</a></p>
+<p>But what about individuals that are using non-native, third-party screen capture tools? I would recommend performing an inventory of software applications that are installed on corporate systems and performing some further research / testing for how these applications generate image files. Adjust Sysmon, Velociraptor, etc. queries as needed once the general process hierarchy pattern is identified.</p>
+<p>Now that the event has been logged, a SHA256 hash should be included within the event. We can utilize Splunk&rsquo;s search scheduling to regularly populate a lookup file with any and all file hashes that are observed from the screenshot events. But then what?</p>
+<h2 id="active-response-actions" class="headerLink">
+    <a href="#active-response-actions" class="header-mark"></a>Active Response Actions</h2><p>Splunk alert actions are great ways of integrating Splunk with other systems and Security, Orchestration, Automation, and Response (SOAR) platforms. With regards to this situation, one configuration that could be put in place is that, on a regular interval, Splunk can send the file hashes included in the previously created lookup file to a SOAR platform. The SOAR platform can interface with the organization&rsquo;s DLP product, email platform, etc. to block the specified file hashes from being transferred to external locations. Despite email controls, I continue to see email being a common mechanism for data exfiltration by insider threat actors.</p>
+<p>I&rsquo;m no expert when it comes to data loss prevention (DLP) and there are definitely far better (and expensive product) methods for performing what I outlined today. Hell enforcing stricter system controls around screenshot captures and copy &amp; paste are likely more effective. However, I realize going those routes may not work for everyone. This post is my attempt at providing a creative alternative solution.</p>
 </div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2021-08-24</span>
+                <span>Updated on 2022-01-19</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -215,8 +170,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/guidepoint-security-ctf-august-2021/" class="prev" rel="prev" title="GuidePoint Security CTF - August 2021"><i class="fas fa-angle-left fa-fw"></i>GuidePoint Security CTF - August 2021</a>
-            <a href="/posts/wormcon-ctf-2021/" class="next" rel="next" title="WORMCON CTF - 2021">WORMCON CTF - 2021<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/wormcon-ctf-2021/" class="prev" rel="prev" title="WORMCON CTF - 2021"><i class="fas fa-angle-left fa-fw"></i>WORMCON CTF - 2021</a></div>
 </div>
 </article></div>
         </main><footer class="footer">

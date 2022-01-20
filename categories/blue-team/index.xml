@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Blue Team - Category - Incidental InfoSec Blog</title>
+        <link>https://incidentalinfosec.com/categories/blue-team/</link>
+        <description>Blue Team - Category - Incidental InfoSec Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 19 Jan 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://incidentalinfosec.com/categories/blue-team/" rel="self" type="application/rss+xml" /><item>
+    <title>Splunking DLP data with a side of active response</title>
+    <link>https://incidentalinfosec.com/posts/splunking-dlp-data-with-a-side-of-response/</link>
+    <pubDate>Wed, 19 Jan 2022 00:00:00 &#43;0000</pubDate><author>
+        <name>devs</name>
+    </author><guid>https://incidentalinfosec.com/posts/splunking-dlp-data-with-a-side-of-response/</guid>
+    <description><![CDATA[Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?
+For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere).]]></description>
+</item></channel>
+</rss>

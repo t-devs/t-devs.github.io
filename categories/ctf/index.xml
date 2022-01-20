@@ -12,7 +12,7 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/wormcon.webp" referrerpolicy="no-referrer">
             </div>WORMCON CTF occurred this weekend and I had a fun time digging through a handful of Forensics and Networking challenges.
-Network At Risk (Part 2) This challenge provided a PCAP file that contained quite a bit of FTP traffic. As I&rsquo;m sure most know, FTP does not encrypt data while in transit. This provided me with a good starting point to try and gather some information.
+Network At Risk (Part 2)This challenge provided a PCAP file that contained quite a bit of FTP traffic. As I&rsquo;m sure most know, FTP does not encrypt data while in transit. This provided me with a good starting point to try and gather some information.
  Figure 1: Protocol hierarchy   Sure enough, one of the first things I noticed in the FTP requests is a username and password.]]></description>
 </item><item>
     <title>CorCTF - 2021</title>
