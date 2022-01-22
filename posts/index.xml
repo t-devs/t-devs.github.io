@@ -9,7 +9,7 @@
     <pubDate>Wed, 19 Jan 2022 00:00:00 &#43;0000</pubDate><author>
         <name>devs</name>
     </author><guid>https://incidentalinfosec.com/posts/splunking-dlp-data-with-a-side-of-response/</guid>
-    <description><![CDATA[Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?
+    <description><![CDATA[Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this suggestion?
 For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere).]]></description>
 </item><item>
     <title>WORMCON CTF - 2021</title>

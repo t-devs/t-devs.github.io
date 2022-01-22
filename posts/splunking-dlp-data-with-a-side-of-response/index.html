@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title class="pjax-title">Splunking DLP data with a side of active response - Incidental InfoSec Blog</title><meta name="Description" content=""><meta property="og:title" content="Splunking DLP data with a side of active response" />
-<meta property="og:description" content="Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?
+<meta property="og:description" content="Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this suggestion?
 For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere)." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://incidentalinfosec.com/posts/splunking-dlp-data-with-a-side-of-response/" /><meta property="article:section" content="posts" />
@@ -15,7 +15,7 @@ For in-person events, this warning may be enough to ward off the rogue mobile ph
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Splunking DLP data with a side of active response"/>
-<meta name="twitter:description" content="Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?
+<meta name="twitter:description" content="Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this suggestion?
 For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere)."/>
 <meta name="application-name" content="Incidental InfoSec Blog">
 <meta name="apple-mobile-web-app-title" content="Incidental InfoSec Blog">
@@ -33,7 +33,7 @@ For in-person events, this warning may be enough to ward off the rogue mobile ph
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/incidentalinfosec.com\/posts\/splunking-dlp-data-with-a-side-of-response\/"
-        },"genre": "posts","wordcount":  591 ,
+        },"genre": "posts","wordcount":  664 ,
         "url": "https:\/\/incidentalinfosec.com\/posts\/splunking-dlp-data-with-a-side-of-response\/","datePublished": "2022-01-19T00:00:00+00:00","dateModified": "2022-01-19T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "devs"},"author": {
@@ -128,23 +128,34 @@ For in-person events, this warning may be enough to ward off the rogue mobile ph
             <div class="post-meta-line">
                 <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="/" title="Author" rel=" author" class="author">devs</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/blue-team/"><i class="far fa-folder fa-fw"></i>Blue Team</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;591 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
-        </div><div class="content" id="content"><p>Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this rule?</p>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-01-19">2022-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;664 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="content" id="content"><p>Recently, I was attending a corporate event via conference call and I noticed a distinct phrase being mentioned over and over by the event speakers. &ldquo;Please refrain from taking screenshots of these slides as they are not meant for public disclosure.&rdquo; Sound familiar to anyone? How many people are actually going to abide by this suggestion?</p>
 <p>For in-person events, this warning may be enough to ward off the rogue mobile phone picture taker&hellip;but let&rsquo;s face it&hellip;when people are at home, in their office, not thinking that they are being &ldquo;watched&rdquo;, they definitely are going to take that screen capture (and potentially send it elsewhere). Don&rsquo;t believe me?</p>
 <p>The following sections outline how I tested this theory and built out a very rough active response workflow for preventing data loss scenarios of this type.</p>
 <h2 id="system-level-log-monitoring" class="headerLink">
     <a href="#system-level-log-monitoring" class="header-mark"></a>System Level Log Monitoring</h2><p>I should mention before going further that although the latest wiz-bangy EDR tool isn&rsquo;t needed for this setup, there needs to be some method, tool, or mechanism of grabbing system level file creation events from the to-be monitored devices (preferably quickly).</p>
-<p>For those unfamiliar, there are some great free tools out there that can be deployed for this purpose. They include Velociraptor and everyone&rsquo;s favorite, Sysmon. Additionally, for macOS systems, the product Jamf Protect works very well for remotely collecting Apple Unified Log events.</p>
-<p>Most organizations these days are sending various categories of event logs to a SIEM (i.e. Splunk) and endpoint data should be no different. Features such as Splunk HEC and Universal Forwarders make it easy to pull in this information.</p>
-<p>So what do we look for in the event logs? In our example scenario of a meeting participant taking an &ldquo;unauthorized&rdquo; screen capture of sensitive content, it&rsquo;s pretty easy. Any file creation events that occur from the devices default screen capture application are likely to be files of interest.</p>
-<p>Jamf Protect even comes with an out-of-box analytic for screenshots being taken on a system.
-<a href="https://docs.jamf.com/jamf-protect/documentation/Security.html" target="_blank" rel="noopener noreffer">https://docs.jamf.com/jamf-protect/documentation/Security.html</a></p>
-<p>But what about individuals that are using non-native, third-party screen capture tools? I would recommend performing an inventory of software applications that are installed on corporate systems and performing some further research / testing for how these applications generate image files. Adjust Sysmon, Velociraptor, etc. queries as needed once the general process hierarchy pattern is identified.</p>
-<p>Now that the event has been logged, a SHA256 hash should be included within the event. We can utilize Splunk&rsquo;s search scheduling to regularly populate a lookup file with any and all file hashes that are observed from the screenshot events. But then what?</p>
+<p>For those unfamiliar, there are some great free and lower-priced tools out there that can be deployed for this purpose. Some of these tools include <a href="https://docs.velociraptor.app/" target="_blank" rel="noopener noreffer">Velociraptor</a> and everyone&rsquo;s favorite, <a href="https://www.trustedsec.com/tools/trustedsec-sysmon-community-guide/" target="_blank" rel="noopener noreffer">Sysmon</a>. Additionally, for macOS systems, the product <a href="https://www.jamf.com/products/jamf-protect/" target="_blank" rel="noopener noreffer">Jamf Protect</a> works very well for remotely collecting Apple Unified Log events.</p>
+<p>Most organizations these days are sending various categories of event logs to a SIEM (i.e. Splunk) and endpoint data should be no different. Features such as <a href="https://docs.splunk.com/Documentation/Splunk/8.2.4/Data/UsetheHTTPEventCollector" target="_blank" rel="noopener noreffer">Splunk HEC</a> and Universal Forwarders make it easy to pull in this information from the hosts themselves or out of endpoint product consoles.</p>
+<p>So what do we look for in the event logs? In the example scenario of a meeting participant taking an &ldquo;unauthorized&rdquo; screen capture of sensitive content, it&rsquo;s pretty easy. Any file creation events that occur from the devices default screen capture application (i.e. SnippingTool, com.apple.screencapture, etc.) are likely to be files of interest.</p>
+<p>Jamf Protect even comes with an <a href="https://docs.jamf.com/jamf-protect/documentation/Security.html" target="_blank" rel="noopener noreffer">out-of-box analytic</a> for screenshots being taken on a system.</p>
+<p>But what about individuals that are using non-native, third-party screen capture tools? Performing an inventory of software applications that are installed on systems is a good start. After this, gathering information around the process flow for these applications is a good next step. Finally, adjust Sysmon, Velociraptor, other endpoint agent queries as needed once the general process patterns are identified to capture the screenshot file creation events.</p>
+<p>Now that the event has been logged, a SHA256 hash should be included within the event. We can utilize Splunk&rsquo;s search scheduling to regularly populate a lookup file with any and all file hashes that are observed from the screenshot events. An example of this query could be:</p>
+<pre tabindex="0"><code>index=endpoint event_name=&quot;Screenshot Taken&quot;
+| dedup sha256hash
+| table sha256hash
+| outputlookup append=t screenshot_hashes.csv
+</code></pre><p>But now what?</p>
 <h2 id="active-response-actions" class="headerLink">
-    <a href="#active-response-actions" class="header-mark"></a>Active Response Actions</h2><p>Splunk alert actions are great ways of integrating Splunk with other systems and Security, Orchestration, Automation, and Response (SOAR) platforms. With regards to this situation, one configuration that could be put in place is that, on a regular interval, Splunk can send the file hashes included in the previously created lookup file to a SOAR platform. The SOAR platform can interface with the organization&rsquo;s DLP product, email platform, etc. to block the specified file hashes from being transferred to external locations. Despite email controls, I continue to see email being a common mechanism for data exfiltration by insider threat actors.</p>
-<p>I&rsquo;m no expert when it comes to data loss prevention (DLP) and there are definitely far better (and expensive product) methods for performing what I outlined today. Hell, enforcing stricter system controls around screenshot captures and copy &amp; paste are likely more effective. However, I realize going those routes may not work for everyone. This post is my attempt at providing a creative alternative solution.</p>
+    <a href="#active-response-actions" class="header-mark"></a>Active Response Actions</h2><p>Splunk alert actions are great ways of integrating Splunk with other systems and Security, Orchestration, Automation, and Response (SOAR) platforms. With regards to the screenshot use case, one configuration that could be put in place is that, on a regular interval, Splunk can send the file hashes included in the previously created lookup file to a SOAR platform. The SOAR platform can interface with the organization&rsquo;s DLP product, email platform, etc. to block the specified file hashes from being transferred to external locations. Email continues to be one of the most common mechanisms for data exfiltration by insider threat actors.</p>
+<figure><img src="/images/dlp_data_flow.webp" width="700"/>
+</figure>
+
+<p>I&rsquo;m no expert when it comes to data loss prevention (DLP) and there are definitely far better (and expensive product) methods for performing what I outlined today. Like with other areas of blue-teaming, having a defense in depth strategy with multiple ways of detecting and remediating risks is important. Hopefully this post has outlined a creative and inexpensive method for assisting with a data loss prevention use case.</p>
+<hr>
+<p><a href="https://www.flaticon.com/free-icons/user" target="_blank" rel="noopener noreffer">User icons</a> created by Freepik - Flaticon.<br>
+<a href="https://www.flaticon.com/free-icons/screenshot" target="_blank" rel="noopener noreffer">Screenshot icons</a> created by Freepik - Flaticon.<br>
+<a href="https://www.flaticon.com/free-icons/development" target="_blank" rel="noopener noreffer">Development icons</a> created by Freepik - Flaticon.</p>
 </div>
 
         <div class="post-footer" id="post-footer">
