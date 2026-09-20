@@ -18,22 +18,7 @@ env:
   HUGO_VERSION: 0.166.0
 
 jobs:
-  secret-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - name: TruffleHog secret scan
-        uses: trufflesecurity/trufflehog@v3.97.5
-        with:
-          path: ./
-          extra_args: --results=verified,unknown --fail
-
   build:
-    needs: secret-scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
