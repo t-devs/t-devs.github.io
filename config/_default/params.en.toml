@@ -1,0 +1,48 @@
+description = "Security research, CTF write-ups, and blue team notes from Incidental InfoSec."
+keywords = ["infosec", "blue-team", "ctf", "careers"]
+
+[app]
+  title = "Incidental InfoSec"
+  noFavicon = false
+  svgFavicon = ""
+  iconColor = "#5bbad5"
+  tileColor = "#da532c"
+
+[search]
+  enable = true
+  type = "fuse"
+  contentLength = 4000
+  placeholder = ""
+  maxResultLength = 10
+  snippetLength = 30
+  highlightTag = "em"
+  absoluteURL = false
+  [search.fuse]
+    isCaseSensitive = false
+    minMatchCharLength = 2
+    findAllMatches = false
+    location = 0
+    threshold = 0.3
+    distance = 100
+    ignoreLocation = false
+    useExtendedSearch = false
+    ignoreFieldNorm = false
+
+[home]
+  rss = 10
+  [home.profile]
+    enable = true
+    gravatarEmail = ""
+    avatarURL = "/images/avatar.svg"
+    avatarLinkURL = ""
+    title = ""
+    subtitle = "I don't know how I got here."
+    typeit = true
+    social = false
+    disclaimer = ""
+  [home.posts]
+    enable = true
+    paginate = 6
+
+[sponsor]
+  enable = false

@@ -1,0 +1,4 @@
+weight = 1
+locale = "en"
+label = "English"
+hasCJKLanguage = false

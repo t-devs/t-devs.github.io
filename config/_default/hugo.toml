@@ -1,0 +1,9 @@
+baseURL = "https://incidentalinfosec.com/"
+defaultContentLanguage = "en"
+title = "Incidental InfoSec Blog"
+
+enableRobotsTXT = true
+enableEmoji = true
+
+theme = "DoIt"
+themesDir = "themes"

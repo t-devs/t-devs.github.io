@@ -1,0 +1,154 @@
+title = "Incidental InfoSec Blog"
+version = "1.0.X"
+defaultTheme = "light"
+dateFormat = "2006-01-02"
+images = ["/images/avatar.svg"]
+enablePWA = false
+license = ""
+bundle = false
+
+[author]
+  name = "devs"
+  email = ""
+  link = "https://github.com/t-devs"
+  avatar = "/images/avatar.svg"
+  gravatarEmail = ""
+
+[image]
+  cacheRemote = true
+  optimise = true
+
+[header]
+  themeChangeMode = "select"
+  [header.title]
+    logo = ""
+    name = "Incidental InfoSec Blog"
+    pre = ""
+    post = ""
+    typeit = false
+
+[footer]
+  enable = true
+  custom = ''
+  hugo = false
+  hostedOn = ''
+  copyright = true
+  author = true
+  since = 2021
+  icp = ""
+  license = ''
+
+[section]
+  paginate = 20
+  dateFormat = "01-02"
+  rss = 10
+  [section.recentlyUpdated]
+    enable = true
+    rss = true
+    days = 30
+    maxCount = 10
+
+[list]
+  paginate = 20
+  dateFormat = "01-02"
+  rss = 10
+
+[page]
+  hiddenFromHomePage = false
+  hiddenFromSearch = false
+  twemoji = false
+  lightgallery = false
+  ruby = true
+  fraction = true
+  linkToMarkdown = true
+  linkToSource = "https://github.com/t-devs/blog/blob/main/incidentalinfosec.com/content/{path}"
+  linkToEdit = "https://github.com/t-devs/blog/edit/main/incidentalinfosec.com/content/{path}"
+  linkToReport = "https://github.com/t-devs/blog/issues/new?title=%5Bbug%5D%20{title}&body=%7CField%7CValue%7C%0A%7C-%7C-%7C%0A%7CTitle%7C{title}%7C%0A%7CUrl%7C{url}%7C%0A%7CFilename%7Chttps://github.com/t-devs/blog/blob/main/incidentalinfosec.com/content/{path}%7C"
+  rssFullText = false
+  seriesNavigation = true
+  enableLastMod = true
+  enableWordCount = true
+  enableReadingTime = true
+  [page.instantpage]
+    enable = true
+  [page.outdatedArticleReminder]
+    enable = false
+    reminder = 90
+    warning = 180
+  [page.toc]
+    enable = true
+    keepStatic = false
+    auto = true
+  [page.code]
+    maxShownLines = 10
+    lineNos = true
+    wrap = false
+    header = true
+  [page.table]
+    sort = true
+  [page.header]
+    [page.header.number]
+      enable = false
+  [page.math]
+    enable = false
+  [page.mapbox]
+    accessToken = ""
+  [page.share]
+    enable = true
+    Facebook = true
+    Twitter = true
+    Linkedin = true
+    Reddit = true
+    HackerNews = true
+    Mastodon = true
+    Weibo = false
+    Telegram = false
+    Line = false
+  [page.comment]
+    enable = false
+  [page.library]
+    [page.library.css]
+    [page.library.js]
+  [page.seo]
+    images = []
+    [page.seo.publisher]
+      name = "devs"
+      logoUrl = "/images/avatar.svg"
+  [page.related]
+    enable = true
+    count = 5
+
+[sponsor]
+  enable = false
+
+[typeit]
+  speed = 100
+  cursorSpeed = 1000
+  cursorChar = "|"
+  duration = -1
+
+[verification]
+  google = ""
+  bing = ""
+  yandex = ""
+  pinterest = ""
+  baidu = ""
+
+[seo]
+  image = "/images/avatar.svg"
+  thumbnailUrl = "/images/avatar.svg"
+
+[analytics]
+  enable = true
+  [analytics.google]
+    id = "G-0XFGZRWHT7"
+    anonymizeIP = false
+
+[cookieconsent]
+  enable = false
+
+[cdn]
+  data = ""
+
+[compatibility]
+  polyfill = false

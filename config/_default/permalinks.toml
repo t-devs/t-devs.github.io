@@ -1,0 +1,5 @@
+# Permalinks config (https://gohugo.io/content-management/urls/#permalinks)
+# Permalinks 配置 (https://gohugo.io/content-management/urls/#permalinks)
+
+# preserves the original site's /posts/<slug>/ URL structure
+posts = "/posts/:contentbasename/"
