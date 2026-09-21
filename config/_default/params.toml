@@ -1,8 +1,8 @@
 title = "Incidental InfoSec Blog"
 version = "1.0.X"
-defaultTheme = "light"
+defaultTheme = "dark"
 dateFormat = "2006-01-02"
-images = ["/images/avatar.svg"]
+images = ["/images/avatar.png"]
 enablePWA = false
 license = ""
 bundle = false
@@ -11,7 +11,7 @@ bundle = false
   name = "devs"
   email = ""
   link = "https://github.com/t-devs"
-  avatar = "/images/avatar.svg"
+  avatar = "/images/avatar.png"
   gravatarEmail = ""
 
 [image]
@@ -113,7 +113,7 @@ bundle = false
     images = []
     [page.seo.publisher]
       name = "devs"
-      logoUrl = "/images/avatar.svg"
+      logoUrl = "/images/avatar.png"
   [page.related]
     enable = true
     count = 5
@@ -135,8 +135,8 @@ bundle = false
   baidu = ""
 
 [seo]
-  image = "/images/avatar.svg"
-  thumbnailUrl = "/images/avatar.svg"
+  image = "/images/avatar.png"
+  thumbnailUrl = "/images/avatar.png"
 
 [analytics]
   enable = true

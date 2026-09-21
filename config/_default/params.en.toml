@@ -33,10 +33,10 @@ keywords = ["infosec", "blue-team", "ctf", "careers"]
   [home.profile]
     enable = true
     gravatarEmail = ""
-    avatarURL = "/images/avatar.svg"
+    avatarURL = "/images/avatar.png"
     avatarLinkURL = ""
     title = ""
-    subtitle = "I don't know how I got here."
+    subtitle = "Detect. Respond. Question life choices."
     typeit = true
     social = false
     disclaimer = ""
