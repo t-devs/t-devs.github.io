@@ -30,3 +30,11 @@
   url = "/series/"
   title = ""
   weight = 4
+[[main]]
+  identifier = "security-findings"
+  pre = ""
+  post = ""
+  name = "Security Findings"
+  url = "/security-findings/"
+  title = ""
+  weight = 5

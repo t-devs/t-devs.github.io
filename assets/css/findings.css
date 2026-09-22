@@ -1,0 +1,78 @@
+/* Styling for the /security-findings/ page. Uses only the DoIt theme's own
+   CSS custom properties (never hardcoded colors) so light/dark mode keeps
+   working automatically -- see themes/DoIt/assets/css/main.css for the
+   full variable set this draws from. */
+
+.findings-status {
+  color: var(--global-font-secondary-color);
+  font-size: 0.9rem;
+}
+
+#findings-chart {
+  width: 100%;
+  height: 320px;
+  margin: 1.5rem 0 2rem;
+}
+
+.findings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.finding-card {
+  background: var(--showcase-background-color);
+  border: 1px solid var(--global-border-color);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.finding-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.finding-card__name {
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--global-font-color);
+  word-break: break-word;
+}
+
+.finding-card__ecosystem {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--global-font-secondary-color);
+  white-space: nowrap;
+}
+
+.finding-card__hits {
+  margin-top: 0.4rem;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--single-link-color);
+}
+
+.finding-card__meta {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--global-font-secondary-color);
+}
+
+.finding-card__reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+}
+
+.finding-tag {
+  font-size: 0.7rem;
+  background: var(--table-thead-color);
+  color: var(--global-font-color);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+}
