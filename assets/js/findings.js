@@ -76,29 +76,35 @@
     });
   }
 
-  function ecosystemCounts(findings) {
-    var counts = {};
-    findings.forEach(function (finding) {
-      var label = ECOSYSTEM_LABELS[finding.ecosystem] || finding.ecosystem;
-      counts[label] = (counts[label] || 0) + 1;
+  // dailyCounts: [{date: "2026-09-22", npm: 2, pypi: 5}, ...], one entry
+  // per day in the digest's window, oldest first, zero-filled -- see
+  // publisher-render in guarddog-pipeline for how this is built server-side.
+  function chartOption(dailyCounts) {
+    var dates = dailyCounts.map(function (d) {
+      return d.date;
     });
-    return counts;
-  }
-
-  function chartOption(findings) {
-    var counts = ecosystemCounts(findings);
-    var labels = Object.keys(counts);
     return {
-      title: { text: "Findings by ecosystem", textStyle: { fontSize: 14 } },
-      tooltip: {},
-      grid: { left: 40, right: 20, top: 40, bottom: 30 },
-      xAxis: { type: "category", data: labels },
+      title: { text: "Suspicious findings per day", textStyle: { fontSize: 14 } },
+      tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+      legend: { data: ["npm", "PyPI"], bottom: 0 },
+      grid: { left: 40, right: 20, top: 40, bottom: 50 },
+      xAxis: { type: "category", data: dates },
       yAxis: { type: "value", minInterval: 1 },
       series: [
         {
+          name: "npm",
           type: "bar",
-          data: labels.map(function (label) {
-            return counts[label];
+          stack: "total",
+          data: dailyCounts.map(function (d) {
+            return d.npm;
+          }),
+        },
+        {
+          name: "PyPI",
+          type: "bar",
+          stack: "total",
+          data: dailyCounts.map(function (d) {
+            return d.pypi;
           }),
           itemStyle: { borderRadius: [4, 4, 0, 0] },
         },
@@ -107,14 +113,14 @@
   }
 
   var chartInstance = null;
-  var lastFindings = [];
+  var lastDailyCounts = [];
 
-  function renderChart(findings) {
+  function renderChart(dailyCounts) {
     var container = document.getElementById("findings-chart");
-    if (!container || !window.echarts || !findings.length) return;
+    if (!container || !window.echarts || !dailyCounts.length) return;
     if (chartInstance) chartInstance.dispose();
     chartInstance = window.echarts.init(container, window.isDark ? "dark" : "macarons");
-    chartInstance.setOption(chartOption(findings));
+    chartInstance.setOption(chartOption(dailyCounts));
   }
 
   // The theme's own dark/light toggle broadcasts through these globals
@@ -123,7 +129,7 @@
   // of the page, instead of only the theme's own .echarts-class charts.
   if (window.switchThemeEventSet) {
     window.switchThemeEventSet.add(function () {
-      if (lastFindings.length) renderChart(lastFindings);
+      if (lastDailyCounts.length) renderChart(lastDailyCounts);
     });
   }
   if (window.resizeEventSet) {
@@ -140,9 +146,10 @@
         return resp.json();
       })
       .then(function (digest) {
-        lastFindings = digest.findings || [];
-        renderList(lastFindings);
-        renderChart(lastFindings);
+        var findings = digest.findings || [];
+        lastDailyCounts = digest.daily_counts || [];
+        renderList(findings);
+        renderChart(lastDailyCounts);
       })
       .catch(function (err) {
         if (status) status.textContent = "Couldn't load findings right now (" + err.message + ").";
