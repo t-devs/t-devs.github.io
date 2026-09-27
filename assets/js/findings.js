@@ -43,11 +43,32 @@
     );
     card.appendChild(header);
 
-    var hitLabel = finding.hit_count + " GuardDog issue" + (finding.hit_count === 1 ? "" : "s");
-    card.appendChild(el("div", "finding-card__hits", hitLabel));
+    // 0 means GuardDog couldn't analyze it (e.g. PyPI already removed the
+    // package) -- the finding rests on Socket alone, so don't claim "0 issues".
+    if (finding.hit_count > 0) {
+      var hitLabel = finding.hit_count + " GuardDog issue" + (finding.hit_count === 1 ? "" : "s");
+      card.appendChild(el("div", "finding-card__hits", hitLabel));
+    }
 
     var metaLabel = "v" + finding.version + " · " + relativeTime(finding.scanned_at);
     card.appendChild(el("div", "finding-card__meta", metaLabel));
+
+    // Older digests (and any row written before the Socket gate) have no
+    // "socket" field -- render nothing rather than a broken badge.
+    var socket = finding.socket;
+    if (socket && socket.verdict === "confirmed") {
+      var isLink = typeof socket.url === "string" && socket.url.indexOf("https://socket.dev/") === 0;
+      var badge = el(isLink ? "a" : "span", "finding-card__socket", "Confirmed by Socket");
+      if (isLink) {
+        badge.href = socket.url;
+        badge.target = "_blank";
+        badge.rel = "noopener noreferrer";
+      }
+      if (socket.alert_types && socket.alert_types.length) {
+        badge.title = "Socket alerts: " + socket.alert_types.join(", ");
+      }
+      card.appendChild(badge);
+    }
 
     var tags = (finding.match_reasons || []).concat(finding.report_summary || []);
     if (tags.length) {

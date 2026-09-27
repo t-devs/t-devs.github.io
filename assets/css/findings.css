@@ -62,6 +62,18 @@
   color: var(--global-font-secondary-color);
 }
 
+.finding-card__socket {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border: 1px solid var(--single-link-color);
+  color: var(--single-link-color);
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+  text-decoration: none;
+}
+
 .finding-card__reasons {
   display: flex;
   flex-wrap: wrap;
