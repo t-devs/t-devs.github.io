@@ -89,10 +89,86 @@
   margin-top: 0.6rem;
 }
 
+.finding-card__reasons--sm {
+  margin-top: 0.3rem;
+}
+
 .finding-tag {
   font-size: 0.7rem;
   background: var(--table-thead-color);
   color: var(--global-font-color);
   border-radius: 4px;
   padding: 0.15rem 0.5rem;
+}
+
+.finding-tag--sm {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+}
+
+/* A package with 2+ flagged versions (e.g. a mass-typosquat campaign
+   pushing many releases in a row) collapses into one summary card instead
+   of clogging the list with a near-duplicate card per version -- each
+   version's own telemetry (score, detection time, match reasons, Socket
+   alerts) is still there, just behind the disclosure below. */
+.finding-card--group {
+  grid-column: span 2;
+}
+
+@media (max-width: 620px) {
+  .finding-card--group {
+    grid-column: span 1;
+  }
+}
+
+.finding-card__versions {
+  margin-top: 0.75rem;
+}
+
+.finding-card__versions summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--single-link-color);
+  user-select: none;
+}
+
+.finding-card__version-list {
+  margin-top: 0.6rem;
+  max-height: 260px;
+  overflow-y: auto;
+  border-top: 1px solid var(--global-border-color);
+}
+
+.finding-version-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--global-border-color);
+  font-size: 0.8rem;
+}
+
+.finding-version-row__version {
+  font-weight: 600;
+  color: var(--global-font-color);
+  min-width: 4.5rem;
+}
+
+.finding-version-row__score {
+  color: var(--single-link-color);
+  font-weight: 600;
+  min-width: 2.5rem;
+}
+
+.finding-version-row__score--unscannable {
+  color: var(--global-font-secondary-color);
+  font-weight: normal;
+  font-style: italic;
+}
+
+.finding-version-row__meta {
+  color: var(--global-font-secondary-color);
+  white-space: nowrap;
 }

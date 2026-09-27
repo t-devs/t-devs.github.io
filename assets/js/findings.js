@@ -33,6 +33,46 @@
     return node;
   }
 
+  function scoreLabel(finding) {
+    // guarddog_score is null when GuardDog couldn't score the package at all
+    // (e.g. the registry had already removed it by scan time) -- distinct
+    // from a real low/zero score. Publishing no longer requires a GuardDog
+    // score at all (Socket confirming alone is sufficient), so this case is
+    // expected, not an error.
+    return typeof finding.guarddog_score === "number" ? finding.guarddog_score.toFixed(1) : null;
+  }
+
+  function socketTags(finding) {
+    return (finding.match_reasons || []).concat(finding.report_summary || []);
+  }
+
+  function appendSocketBadge(container, socket) {
+    // Older digests (and any row written before the Socket gate) have no
+    // "socket" field -- render nothing rather than a broken badge.
+    if (!socket || socket.verdict !== "confirmed") return;
+    var isLink = typeof socket.url === "string" && socket.url.indexOf("https://socket.dev/") === 0;
+    var badge = el(isLink ? "a" : "span", "finding-card__socket", "Confirmed by Socket");
+    if (isLink) {
+      badge.href = socket.url;
+      badge.target = "_blank";
+      badge.rel = "noopener noreferrer";
+    }
+    if (socket.alert_types && socket.alert_types.length) {
+      badge.title = "Socket alerts: " + socket.alert_types.join(", ");
+    }
+    container.appendChild(badge);
+  }
+
+  function appendTags(container, tags, small) {
+    if (!tags.length) return;
+    var tagWrap = el("div", small ? "finding-card__reasons finding-card__reasons--sm" : "finding-card__reasons");
+    tags.forEach(function (tag) {
+      tagWrap.appendChild(el("span", small ? "finding-tag finding-tag--sm" : "finding-tag", tag));
+    });
+    container.appendChild(tagWrap);
+  }
+
+  // A single version's own card -- unchanged shape from before grouping existed.
   function renderCard(finding) {
     var card = el("div", "finding-card");
 
@@ -43,48 +83,110 @@
     );
     card.appendChild(header);
 
-    // guarddog_score is null when GuardDog couldn't score the package at all
-    // (e.g. the registry had already removed it by scan time) -- distinct
-    // from a real low/zero score, and shown as its own muted state rather
-    // than a missing number or a false "0 issues" claim. Publishing no
-    // longer requires a GuardDog score at all (Socket confirming alone is
-    // sufficient), so this case is expected, not an error.
-    if (typeof finding.guarddog_score === "number") {
-      card.appendChild(el("div", "finding-card__hits", "GuardDog score: " + finding.guarddog_score.toFixed(1)));
+    var score = scoreLabel(finding);
+    if (score !== null) {
+      card.appendChild(el("div", "finding-card__hits", "GuardDog score: " + score));
     } else {
       card.appendChild(el("div", "finding-card__hits finding-card__hits--unscannable", "GuardDog couldn't scan this package"));
     }
 
-    var metaLabel = "v" + finding.version + " · " + relativeTime(finding.scanned_at);
-    card.appendChild(el("div", "finding-card__meta", metaLabel));
-
-    // Older digests (and any row written before the Socket gate) have no
-    // "socket" field -- render nothing rather than a broken badge.
-    var socket = finding.socket;
-    if (socket && socket.verdict === "confirmed") {
-      var isLink = typeof socket.url === "string" && socket.url.indexOf("https://socket.dev/") === 0;
-      var badge = el(isLink ? "a" : "span", "finding-card__socket", "Confirmed by Socket");
-      if (isLink) {
-        badge.href = socket.url;
-        badge.target = "_blank";
-        badge.rel = "noopener noreferrer";
-      }
-      if (socket.alert_types && socket.alert_types.length) {
-        badge.title = "Socket alerts: " + socket.alert_types.join(", ");
-      }
-      card.appendChild(badge);
-    }
-
-    var tags = (finding.match_reasons || []).concat(finding.report_summary || []);
-    if (tags.length) {
-      var tagWrap = el("div", "finding-card__reasons");
-      tags.forEach(function (tag) {
-        tagWrap.appendChild(el("span", "finding-tag", tag));
-      });
-      card.appendChild(tagWrap);
-    }
+    card.appendChild(el("div", "finding-card__meta", "v" + finding.version + " · " + relativeTime(finding.scanned_at)));
+    appendSocketBadge(card, finding.socket);
+    appendTags(card, socketTags(finding), false);
 
     return card;
+  }
+
+  // One row inside an expanded version group -- same telemetry as a full
+  // card (score, detection time, match reasons, Socket alerts), just laid
+  // out compactly since the header/ecosystem/badge are already shown once
+  // at the group level.
+  function renderVersionRow(finding) {
+    var row = el("div", "finding-version-row");
+    row.appendChild(el("span", "finding-version-row__version", "v" + finding.version));
+    var score = scoreLabel(finding);
+    row.appendChild(el(
+      "span",
+      "finding-version-row__score" + (score === null ? " finding-version-row__score--unscannable" : ""),
+      score === null ? "unscannable" : score
+    ));
+    row.appendChild(el("span", "finding-version-row__meta", relativeTime(finding.scanned_at)));
+    if (finding.socket && finding.socket.alert_types && finding.socket.alert_types.length) {
+      row.title = "Socket alerts: " + finding.socket.alert_types.join(", ");
+    }
+    appendTags(row, socketTags(finding), true);
+    return row;
+  }
+
+  // versions: 2+ findings sharing an ecosystem+name, newest first (the order
+  // they already arrive in from the digest). Keeps every version's own
+  // telemetry (score, detection time, match reasons, Socket alerts) -- just
+  // collapsed behind a disclosure instead of one full card per version,
+  // which is what actually clogs the list for a package like prosocks with
+  // 22 flagged versions.
+  function renderVersionGroup(versions) {
+    var newest = versions[0];
+    var card = el("div", "finding-card finding-card--group");
+
+    var header = el("div", "finding-card__header");
+    header.appendChild(el("span", "finding-card__name", newest.name));
+    header.appendChild(el("span", "finding-card__ecosystem", ECOSYSTEM_LABELS[newest.ecosystem] || newest.ecosystem));
+    card.appendChild(header);
+
+    var scores = versions
+      .map(function (f) {
+        return f.guarddog_score;
+      })
+      .filter(function (s) {
+        return typeof s === "number";
+      });
+    if (scores.length) {
+      var lo = Math.min.apply(null, scores).toFixed(1);
+      var hi = Math.max.apply(null, scores).toFixed(1);
+      card.appendChild(el("div", "finding-card__hits", "GuardDog score: " + (lo === hi ? lo : lo + "–" + hi)));
+    } else {
+      card.appendChild(el("div", "finding-card__hits finding-card__hits--unscannable", "GuardDog couldn't scan these"));
+    }
+
+    card.appendChild(el(
+      "div",
+      "finding-card__meta",
+      versions.length + " versions flagged · most recent " + relativeTime(newest.scanned_at)
+    ));
+    appendSocketBadge(card, newest.socket);
+
+    var details = document.createElement("details");
+    details.className = "finding-card__versions";
+    var summary = document.createElement("summary");
+    summary.textContent = "Show all " + versions.length + " versions";
+    details.appendChild(summary);
+    var list = el("div", "finding-card__version-list");
+    versions.forEach(function (finding) {
+      list.appendChild(renderVersionRow(finding));
+    });
+    details.appendChild(list);
+    card.appendChild(details);
+
+    return card;
+  }
+
+  // Groups by ecosystem+name, preserving first-seen (i.e. newest-first)
+  // order so a package's position in the list still reflects its most
+  // recent flagged version.
+  function groupByPackage(findings) {
+    var order = [];
+    var groups = {};
+    findings.forEach(function (finding) {
+      var key = finding.ecosystem + "#" + finding.name;
+      if (!groups[key]) {
+        groups[key] = [];
+        order.push(key);
+      }
+      groups[key].push(finding);
+    });
+    return order.map(function (key) {
+      return groups[key];
+    });
   }
 
   function renderList(findings) {
@@ -97,8 +199,8 @@
       return;
     }
     if (status) status.textContent = findings.length + " most recent suspicious findings.";
-    findings.forEach(function (finding) {
-      list.appendChild(renderCard(finding));
+    groupByPackage(findings).forEach(function (versions) {
+      list.appendChild(versions.length > 1 ? renderVersionGroup(versions) : renderCard(versions[0]));
     });
   }
 
