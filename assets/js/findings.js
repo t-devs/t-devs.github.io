@@ -43,11 +43,16 @@
     );
     card.appendChild(header);
 
-    // 0 means GuardDog couldn't analyze it (e.g. PyPI already removed the
-    // package) -- the finding rests on Socket alone, so don't claim "0 issues".
-    if (finding.hit_count > 0) {
-      var hitLabel = finding.hit_count + " GuardDog issue" + (finding.hit_count === 1 ? "" : "s");
-      card.appendChild(el("div", "finding-card__hits", hitLabel));
+    // guarddog_score is null when GuardDog couldn't score the package at all
+    // (e.g. the registry had already removed it by scan time) -- distinct
+    // from a real low/zero score, and shown as its own muted state rather
+    // than a missing number or a false "0 issues" claim. Publishing no
+    // longer requires a GuardDog score at all (Socket confirming alone is
+    // sufficient), so this case is expected, not an error.
+    if (typeof finding.guarddog_score === "number") {
+      card.appendChild(el("div", "finding-card__hits", "GuardDog score: " + finding.guarddog_score.toFixed(1)));
+    } else {
+      card.appendChild(el("div", "finding-card__hits finding-card__hits--unscannable", "GuardDog couldn't scan this package"));
     }
 
     var metaLabel = "v" + finding.version + " · " + relativeTime(finding.scanned_at);

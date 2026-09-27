@@ -56,6 +56,14 @@
   color: var(--single-link-color);
 }
 
+/* GuardDog couldn't score the package at all -- an expected, informational
+   state (Socket confirming alone is enough to publish), not an alert, so it
+   reads as muted body text rather than the bold link-colored score line. */
+.finding-card__hits--unscannable {
+  font-weight: normal;
+  color: var(--global-font-secondary-color);
+}
+
 .finding-card__meta {
   margin-top: 0.2rem;
   font-size: 0.8rem;
