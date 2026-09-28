@@ -204,51 +204,106 @@
     });
   }
 
+  // dailyScanCounts: same shape/window as dailyCounts, but total packages
+  // scanned per ecosystem/day rather than just forwarded findings -- runs
+  // one to two orders of magnitude higher, hence the separate log-scale
+  // axis rather than sharing dailyCounts' linear one. Returns null for a
+  // day with no scan data at all -- either an older digest predating this
+  // series, or (log axes can't plot zero/negative) a genuine zero-scan day
+  // -- so the line shows a gap there instead of a misleading point.
+  function scanSeriesData(dates, dailyScanCounts, key) {
+    var byDate = {};
+    (dailyScanCounts || []).forEach(function (d) {
+      byDate[d.date] = d;
+    });
+    return dates.map(function (date) {
+      var row = byDate[date];
+      var value = row && row[key];
+      return typeof value === "number" && value > 0 ? value : null;
+    });
+  }
+
   // dailyCounts: [{date: "2026-09-22", npm: 2, pypi: 5}, ...], one entry
   // per day in the digest's window, oldest first, zero-filled -- see
   // publisher-render in guarddog-pipeline for how this is built server-side.
-  function chartOption(dailyCounts) {
+  function chartOption(dailyCounts, dailyScanCounts) {
     var dates = dailyCounts.map(function (d) {
       return d.date;
     });
+    var hasScanCounts = !!(dailyScanCounts && dailyScanCounts.length);
+
+    var series = [
+      {
+        name: "npm",
+        type: "bar",
+        stack: "total",
+        yAxisIndex: 0,
+        data: dailyCounts.map(function (d) {
+          return d.npm;
+        }),
+      },
+      {
+        name: "PyPI",
+        type: "bar",
+        stack: "total",
+        yAxisIndex: 0,
+        data: dailyCounts.map(function (d) {
+          return d.pypi;
+        }),
+        itemStyle: { borderRadius: [4, 4, 0, 0] },
+      },
+    ];
+    var legendData = ["npm", "PyPI"];
+
+    if (hasScanCounts) {
+      series.push(
+        {
+          name: "npm scanned",
+          type: "line",
+          yAxisIndex: 1,
+          smooth: true,
+          symbolSize: 4,
+          data: scanSeriesData(dates, dailyScanCounts, "npm"),
+        },
+        {
+          name: "PyPI scanned",
+          type: "line",
+          yAxisIndex: 1,
+          smooth: true,
+          symbolSize: 4,
+          data: scanSeriesData(dates, dailyScanCounts, "pypi"),
+        }
+      );
+      legendData = legendData.concat(["npm scanned", "PyPI scanned"]);
+    }
+
     return {
-      title: { text: "Suspicious findings per day", textStyle: { fontSize: 14 } },
+      title: { text: "Findings & packages scanned per day", textStyle: { fontSize: 14 } },
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
-      legend: { data: ["npm", "PyPI"], bottom: 0 },
-      grid: { left: 40, right: 20, top: 40, bottom: 50 },
+      legend: { data: legendData, bottom: 0 },
+      grid: { left: 45, right: 45, top: 40, bottom: 60 },
       xAxis: { type: "category", data: dates },
-      yAxis: { type: "value", minInterval: 1 },
-      series: [
-        {
-          name: "npm",
-          type: "bar",
-          stack: "total",
-          data: dailyCounts.map(function (d) {
-            return d.npm;
-          }),
-        },
-        {
-          name: "PyPI",
-          type: "bar",
-          stack: "total",
-          data: dailyCounts.map(function (d) {
-            return d.pypi;
-          }),
-          itemStyle: { borderRadius: [4, 4, 0, 0] },
-        },
+      yAxis: [
+        { type: "value", name: "findings", minInterval: 1 },
+        // Log axis: scan volume spans one to two orders of magnitude above
+        // findings volume, and echarts doesn't support stacking on a log
+        // axis anyway -- these two lines are unstacked, unlike the bars.
+        { type: "log", name: "scanned", logBase: 10, min: 1, splitLine: { show: false } },
       ],
+      series: series,
     };
   }
 
   var chartInstance = null;
   var lastDailyCounts = [];
+  var lastDailyScanCounts = [];
 
-  function renderChart(dailyCounts) {
+  function renderChart(dailyCounts, dailyScanCounts) {
     var container = document.getElementById("findings-chart");
     if (!container || !window.echarts || !dailyCounts.length) return;
     if (chartInstance) chartInstance.dispose();
     chartInstance = window.echarts.init(container, window.isDark ? "dark" : "macarons");
-    chartInstance.setOption(chartOption(dailyCounts));
+    chartInstance.setOption(chartOption(dailyCounts, dailyScanCounts));
   }
 
   // The theme's own dark/light toggle broadcasts through these globals
@@ -257,7 +312,7 @@
   // of the page, instead of only the theme's own .echarts-class charts.
   if (window.switchThemeEventSet) {
     window.switchThemeEventSet.add(function () {
-      if (lastDailyCounts.length) renderChart(lastDailyCounts);
+      if (lastDailyCounts.length) renderChart(lastDailyCounts, lastDailyScanCounts);
     });
   }
   if (window.resizeEventSet) {
@@ -276,8 +331,9 @@
       .then(function (digest) {
         var findings = digest.findings || [];
         lastDailyCounts = digest.daily_counts || [];
+        lastDailyScanCounts = digest.daily_scan_counts || [];
         renderList(findings);
-        renderChart(lastDailyCounts);
+        renderChart(lastDailyCounts, lastDailyScanCounts);
       })
       .catch(function (err) {
         if (status) status.textContent = "Couldn't load findings right now (" + err.message + ").";
