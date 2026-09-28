@@ -2,7 +2,6 @@
 title: "Package Paranoia - Open Source Package Scanning"
 authors: ["devs"]
 date: 2026-09-22
-categories: ["projects"]
 library:
   js:
     findings:

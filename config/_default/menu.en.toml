@@ -7,13 +7,21 @@
   title = ""
   weight = 1
 [[main]]
+  identifier = "open-source-package-scanning"
+  pre = ""
+  post = ""
+  name = "Open Source Package Scanning"
+  url = "/open-source-package-scanning/"
+  title = ""
+  weight = 2
+[[main]]
   identifier = "posts"
   pre = ""
   post = ""
   name = "Posts"
   url = "/posts/"
   title = ""
-  weight = 2
+  weight = 3
 [[main]]
   identifier = "categories"
   pre = ""
@@ -21,7 +29,7 @@
   name = "Categories"
   url = "/categories/"
   title = ""
-  weight = 3
+  weight = 4
 [[main]]
   identifier = "series"
   pre = ""
@@ -29,4 +37,4 @@
   name = "Series"
   url = "/series/"
   title = ""
-  weight = 4
+  weight = 5
