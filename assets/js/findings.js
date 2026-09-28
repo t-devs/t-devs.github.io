@@ -226,6 +226,16 @@
   // dailyCounts: [{date: "2026-09-22", npm: 2, pypi: 5}, ...], one entry
   // per day in the digest's window, oldest first, zero-filled -- see
   // publisher-render in guarddog-pipeline for how this is built server-side.
+  //
+  // Two stacked grids, not one shared plot area: an earlier version put the
+  // findings bars (linear axis, small range e.g. 0-20) and scanned-volume
+  // lines (log axis, 1-2000+) in the same plot, on separate y-axes. That's
+  // visually dishonest -- a findings bar near its own small axis max gets
+  // drawn nearly full-height, landing above where a much larger log-axis
+  // value sits (confirmed live: 20 PyPI findings vs 653 PyPI scanned on the
+  // same day rendered with the findings bar looking taller). A linear and a
+  // log axis can't share one plot area and still be visually comparable, so
+  // each series family gets its own panel instead.
   function chartOption(dailyCounts, dailyScanCounts) {
     var dates = dailyCounts.map(function (d) {
       return d.date;
@@ -237,6 +247,7 @@
         name: "npm",
         type: "bar",
         stack: "total",
+        xAxisIndex: 0,
         yAxisIndex: 0,
         data: dailyCounts.map(function (d) {
           return d.npm;
@@ -246,6 +257,7 @@
         name: "PyPI",
         type: "bar",
         stack: "total",
+        xAxisIndex: 0,
         yAxisIndex: 0,
         data: dailyCounts.map(function (d) {
           return d.pypi;
@@ -260,6 +272,7 @@
         {
           name: "npm scanned",
           type: "line",
+          xAxisIndex: 1,
           yAxisIndex: 1,
           smooth: true,
           symbolSize: 4,
@@ -268,6 +281,7 @@
         {
           name: "PyPI scanned",
           type: "line",
+          xAxisIndex: 1,
           yAxisIndex: 1,
           smooth: true,
           symbolSize: 4,
@@ -277,18 +291,41 @@
       legendData = legendData.concat(["npm scanned", "PyPI scanned"]);
     }
 
+    if (!hasScanCounts) {
+      // Fall back to the original single-panel layout when there's no scan
+      // data at all (e.g. an older digest) -- no second axis to conflict with.
+      return {
+        title: { text: "Suspicious findings per day", textStyle: { fontSize: 14 } },
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+        legend: { data: legendData, bottom: 0 },
+        grid: { left: 45, right: 20, top: 40, bottom: 60 },
+        xAxis: { type: "category", data: dates },
+        yAxis: { type: "value", minInterval: 1 },
+        series: series,
+      };
+    }
+
     return {
-      title: { text: "Findings & packages scanned per day", textStyle: { fontSize: 14 } },
+      title: [
+        { text: "Suspicious findings per day", top: 0, left: "center", textStyle: { fontSize: 13 } },
+        { text: "Packages scanned per day (log scale)", top: "54%", left: "center", textStyle: { fontSize: 13 } },
+      ],
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
       legend: { data: legendData, bottom: 0 },
-      grid: { left: 45, right: 45, top: 40, bottom: 60 },
-      xAxis: { type: "category", data: dates },
+      axisPointer: { link: [{ xAxisIndex: "all" }] },
+      grid: [
+        { left: 50, right: 20, top: 30, height: 130 },
+        { left: 50, right: 20, top: 250, height: 130 },
+      ],
+      xAxis: [
+        { type: "category", data: dates, gridIndex: 0, axisLabel: { show: false }, axisTick: { show: false } },
+        { type: "category", data: dates, gridIndex: 1 },
+      ],
       yAxis: [
-        { type: "value", name: "findings", minInterval: 1 },
-        // Log axis: scan volume spans one to two orders of magnitude above
-        // findings volume, and echarts doesn't support stacking on a log
-        // axis anyway -- these two lines are unstacked, unlike the bars.
-        { type: "log", name: "scanned", logBase: 10, min: 1, splitLine: { show: false } },
+        { type: "value", gridIndex: 0, minInterval: 1 },
+        // echarts doesn't support stacking on a log axis anyway -- these
+        // two lines are unstacked, unlike the findings bars above.
+        { type: "log", gridIndex: 1, logBase: 10, min: 1, splitLine: { show: false } },
       ],
       series: series,
     };
