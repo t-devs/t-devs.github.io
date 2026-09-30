@@ -63,6 +63,18 @@
     container.appendChild(badge);
   }
 
+  function appendAikidoBadge(container, finding) {
+    // aikido_flagged is a plain bool, present on every row written after
+    // guarddog-pipeline's Aikido fallback shipped -- older/legacy rows
+    // (and anything Aikido's list doesn't have) are false, no badge.
+    // Unlike Socket, Aikido gives us no deep link -- it's a static
+    // blocklist match, not a per-package analysis page.
+    if (!finding || !finding.aikido_flagged) return;
+    var badge = el("span", "finding-card__aikido", "Flagged by Aikido");
+    badge.title = "Exact name+version match on Aikido Security's public malware blocklist";
+    container.appendChild(badge);
+  }
+
   function appendTags(container, tags, small) {
     if (!tags.length) return;
     var tagWrap = el("div", small ? "finding-card__reasons finding-card__reasons--sm" : "finding-card__reasons");
@@ -92,6 +104,7 @@
 
     card.appendChild(el("div", "finding-card__meta", "v" + finding.version + " · " + relativeTime(finding.scanned_at)));
     appendSocketBadge(card, finding.socket);
+    appendAikidoBadge(card, finding);
     appendTags(card, socketTags(finding), false);
 
     return card;
@@ -113,6 +126,9 @@
     row.appendChild(el("span", "finding-version-row__meta", relativeTime(finding.scanned_at)));
     if (finding.socket && finding.socket.alert_types && finding.socket.alert_types.length) {
       row.title = "Socket alerts: " + finding.socket.alert_types.join(", ");
+    }
+    if (finding.aikido_flagged) {
+      row.appendChild(el("span", "finding-tag finding-tag--sm finding-tag--aikido", "Aikido"));
     }
     appendTags(row, socketTags(finding), true);
     return row;
@@ -154,6 +170,7 @@
       versions.length + " versions flagged · most recent " + relativeTime(newest.scanned_at)
     ));
     appendSocketBadge(card, newest.socket);
+    appendAikidoBadge(card, newest);
 
     var details = document.createElement("details");
     details.className = "finding-card__versions";

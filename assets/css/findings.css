@@ -82,6 +82,28 @@
   text-decoration: none;
 }
 
+/* A distinct color from .finding-card__socket's --single-link-color so the
+   two corroboration sources stay visually distinguishable when a finding
+   carries both -- reuses --code-color (already themed for light/dark)
+   rather than introducing a new hardcoded color. */
+.finding-card__aikido {
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-left: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border: 1px solid var(--code-color);
+  color: var(--code-color);
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+}
+
+.finding-tag--aikido {
+  border: 1px solid var(--code-color);
+  color: var(--code-color);
+  background: transparent;
+}
+
 .finding-card__reasons {
   display: flex;
   flex-wrap: wrap;
