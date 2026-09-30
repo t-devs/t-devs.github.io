@@ -14,6 +14,25 @@
   margin: 1.5rem 0 2rem;
 }
 
+.coverage-note {
+  color: var(--global-font-secondary-color);
+  font-size: 0.85rem;
+  margin: 0 0 0.75rem;
+}
+
+.coverage-charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 0 2rem;
+}
+
+.coverage-chart {
+  flex: 1 1 280px;
+  min-width: 0;
+  height: 320px;
+}
+
 .findings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

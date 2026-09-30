@@ -360,6 +360,72 @@
     chartInstance.setOption(chartOption(dailyCounts, dailyScanCounts));
   }
 
+  // scan_coverage: {ecosystem: {seen, scanned}, ...} -- summed server-side
+  // (publisher-render) over the same window as everything else on this
+  // page. "seen" is real feed volume (poller/handler.py's _record_seen);
+  // "scanned" can in principle exceed it slightly (a handful of scans come
+  // from discovery paths -- pypi-new-projects, Aikido -- that aren't
+  // counted in "seen" at all), so not-scanned is clamped to >= 0 here
+  // rather than assume that can't happen.
+  var COVERAGE_ECOSYSTEM_LABELS = { npm: "npm", pypi: "PyPI" };
+  var coverageChartInstances = { npm: null, pypi: null };
+  var lastScanCoverage = null;
+
+  // Reads a live CSS custom property off :root (document.documentElement is
+  // the <html> element the DoIt theme's own light/dark values -- and its
+  // html.dark toggle -- are both defined on), so pulling colors this way
+  // instead of hardcoding hex values keeps the pies in sync with whichever
+  // theme is active without any dark-mode branching of our own.
+  function _cssVar(name, fallback) {
+    if (typeof getComputedStyle !== "function") return fallback;
+    var value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return value || fallback;
+  }
+
+  function coverageChartOption(seen, scanned, label) {
+    var notScanned = Math.max(0, seen - scanned);
+    // Scanned: the same teal/blue already used for the "Confirmed by
+    // Socket" badge and score text elsewhere on this page -- it already
+    // reads as "the covered/positive part" here. Not scanned: a muted
+    // neutral, deliberately calm rather than alarming -- uncovered volume
+    // isn't inherently bad, just unaddressed.
+    var scannedColor = _cssVar("--single-link-color", "#2d809a");
+    var notScannedColor = _cssVar("--global-font-secondary-color", "#8a8a8a");
+    return {
+      title: { text: label, left: "center", top: 0, textStyle: { fontSize: 13 } },
+      tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
+      legend: { bottom: 0, data: ["Scanned", "Not scanned"] },
+      series: [
+        {
+          type: "pie",
+          radius: ["42%", "68%"],
+          avoidLabelOverlap: true,
+          label: { formatter: "{d}%" },
+          data: [
+            { name: "Scanned", value: scanned, itemStyle: { color: scannedColor } },
+            { name: "Not scanned", value: notScanned, itemStyle: { color: notScannedColor } },
+          ],
+        },
+      ],
+    };
+  }
+
+  function renderCoverageCharts(scanCoverage) {
+    if (!scanCoverage || !window.echarts) return;
+    ["npm", "pypi"].forEach(function (eco) {
+      var container = document.getElementById("coverage-chart-" + eco);
+      var coverage = scanCoverage[eco];
+      // No feed volume recorded at all (e.g. an older digest predating
+      // this field) -- render nothing rather than an empty/misleading pie.
+      if (!container || !coverage || !coverage.seen) return;
+      if (coverageChartInstances[eco]) coverageChartInstances[eco].dispose();
+      coverageChartInstances[eco] = window.echarts.init(container, window.isDark ? "dark" : "macarons");
+      coverageChartInstances[eco].setOption(
+        coverageChartOption(coverage.seen, coverage.scanned, COVERAGE_ECOSYSTEM_LABELS[eco])
+      );
+    });
+  }
+
   // The theme's own dark/light toggle broadcasts through these globals
   // (see themes/DoIt/assets/js/lib/echarts.js for the same pattern) --
   // hook into them so our chart re-themes and resizes along with the rest
@@ -367,11 +433,15 @@
   if (window.switchThemeEventSet) {
     window.switchThemeEventSet.add(function () {
       if (lastDailyCounts.length) renderChart(lastDailyCounts, lastDailyScanCounts);
+      if (lastScanCoverage) renderCoverageCharts(lastScanCoverage);
     });
   }
   if (window.resizeEventSet) {
     window.resizeEventSet.add(function () {
       if (chartInstance) chartInstance.resize();
+      Object.keys(coverageChartInstances).forEach(function (eco) {
+        if (coverageChartInstances[eco]) coverageChartInstances[eco].resize();
+      });
     });
   }
 
@@ -386,8 +456,10 @@
         var findings = digest.findings || [];
         lastDailyCounts = digest.daily_counts || [];
         lastDailyScanCounts = digest.daily_scan_counts || [];
+        lastScanCoverage = digest.scan_coverage || null;
         renderList(findings);
         renderChart(lastDailyCounts, lastDailyScanCounts);
+        renderCoverageCharts(lastScanCoverage);
       })
       .catch(function (err) {
         if (status) status.textContent = "Couldn't load findings right now (" + err.message + ").";

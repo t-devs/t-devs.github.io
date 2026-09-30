@@ -25,6 +25,13 @@ This is a hobby project, not a security product — it won't catch everything, a
 
 <div id="findings-chart"></div>
 
+<p class="coverage-note">Not every package that gets published or updated actually gets a GuardDog scan — only what clears the triage filter above does. Here's roughly what share of real registry activity that filter covers, over the same window as the chart above. The npm figure counts every document revision the registry reports (deprecations and maintainer edits included, not just new versions), so it meaningfully overstates real publish volume — treat it as an upper bound on "seen," not an exact publish count.</p>
+
+<div id="coverage-charts" class="coverage-charts">
+  <div id="coverage-chart-npm" class="coverage-chart"></div>
+  <div id="coverage-chart-pypi" class="coverage-chart"></div>
+</div>
+
 <div id="findings-list" class="findings-grid"></div>
 
 {{< echarts "1px" "1px" >}}
